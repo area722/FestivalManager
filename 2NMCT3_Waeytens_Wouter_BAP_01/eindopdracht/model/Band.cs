@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Common;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,9 @@ namespace eindopdracht.model
 {
     public class Band
     {
-        private String _id;
+        private int _id;
 
-        public String ID
+        public int ID
         {
             get { return _id; }
             set { _id = value; }
@@ -26,9 +27,33 @@ namespace eindopdracht.model
             set { _name = value; }
         }
 
-        private String _photo;
+        private String _phone;
 
-        public String Photo
+        public String Phone
+        {
+            get { return _phone; }
+            set { _phone = value; }
+        }
+
+        private String _fax;
+
+        public String Fax
+        {
+            get { return _fax; }
+            set { _fax = value; }
+        }
+
+        private String _email;
+
+        public String Email
+        {
+            get { return _email; }
+            set { _email = value; }
+        }
+        
+        private Byte[] _photo;
+
+        public Byte[] Photo
         {
             get { return _photo; }
             set { _photo = value; }
@@ -58,13 +83,13 @@ namespace eindopdracht.model
             set { _facebook = value; }
         }
 
-        private String _genres;
+        //private String _genres;
 
-        public String Genres
-        {
-            get { return _genres; }
-            set { _genres = value; }
-        }
+        //public String Genres
+        //{
+        //    get { return _genres; }
+        //    set { _genres = value; }
+        //}
 
         //private ObservableCollection<Genre> _genres;
 
@@ -77,22 +102,56 @@ namespace eindopdracht.model
         public static ObservableCollection<Band> GetBands()
         {
             ObservableCollection<Band> lst = new ObservableCollection<Band>();
-            StreamReader reader = new StreamReader("bands.csv");
-            reader.ReadLine();
-            String line = reader.ReadLine();
-            while (line != null)
+            string sql = "SELECT * FROM Bands";
+            DbDataReader reader = DataBase.GetData(sql);
+            while (reader.Read())
             {
-                String[] splitArr = line.Split(';');
-                Band band = new Band() {ID=splitArr[0],Name=splitArr[1],Photo=splitArr[2],Description=splitArr[3],Twitter=splitArr[4],Facebook=splitArr[5],Genres=splitArr[6] };
+                Band band = new Band() 
+                {
+                    ID = (int)reader[0],
+                    Name = (string)reader[1],
+                    Phone = (string)reader[2],
+                    Fax = (string)reader[3],
+                    Email = (string)reader[4],
+                    Photo = (Byte[])reader[5],
+                    Description = (string)reader[6],
+                    Twitter = (string)reader[7],
+                    Facebook = (string)reader[8]
+                };
                 lst.Add(band);
-                line = reader.ReadLine();
             }
             return lst;
         }
 
-        public override string ToString()
+        public static void AddBand(Band band)
         {
-            return Name;
+            Console.WriteLine("add");
+            String sql = "INSERT INTO Bands (Name,Phone,Fax,Email,Description,Twitter,Facebook,Photo) VALUES (@Name,@Phone,@Fax,@Email,@Description,@Twitter,@Facebook,@Photo)";
+            DbParameter par1 = DataBase.addparameter("@Name", band.Name);
+            DbParameter par2 = DataBase.addparameter("@Phone", band.Phone);
+            DbParameter par3 = DataBase.addparameter("@Fax", band.Fax);
+            DbParameter par4 = DataBase.addparameter("@Email", band.Email);
+            DbParameter par5 = DataBase.addparameter("@Photo", band.Photo);
+            DbParameter par6 = DataBase.addparameter("@Description", band.Description);
+            DbParameter par7 = DataBase.addparameter("@Twitter", band.Twitter);
+            DbParameter par8 = DataBase.addparameter("@Facebook", band.Facebook);
+            DataBase.modifyData(sql,par1,par2,par3,par4,par5,par6,par7,par8);
+        }
+
+        public static void EditBand(Band band)
+        {
+            Console.WriteLine("edit");
+            String sql = "UPDATE Bands SET Name=@Name,Phone=@Phone,Fax=@Fax,Email=@Email,Description=@Description,Twitter=@Twitter,Facebook=@Facebook,Photo=@Photo WHERE ID=@Id";
+            DbParameter par = DataBase.addparameter("@Id",band.ID);
+            DbParameter par1 = DataBase.addparameter("@Name", band.Name);
+            DbParameter par2 = DataBase.addparameter("@Phone", band.Phone);
+            DbParameter par3 = DataBase.addparameter("@Fax", band.Fax);
+            DbParameter par4 = DataBase.addparameter("@Email", band.Email);
+            DbParameter par5 = DataBase.addparameter("@Photo", band.Photo);
+            DbParameter par6 = DataBase.addparameter("@Description", band.Description);
+            DbParameter par7 = DataBase.addparameter("@Twitter", band.Twitter);
+            DbParameter par8 = DataBase.addparameter("@Facebook", band.Facebook);
+            DataBase.modifyData(sql, par, par1, par2, par3, par4, par5, par6, par7, par8);
         }
     }
 }

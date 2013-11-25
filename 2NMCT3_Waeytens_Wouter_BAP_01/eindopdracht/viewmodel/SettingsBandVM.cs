@@ -7,6 +7,8 @@ using System.Collections.ObjectModel;
 using eindopdracht.model;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.Win32;
+using System.IO;
 
 namespace eindopdracht.viewmodel
 {
@@ -56,7 +58,7 @@ namespace eindopdracht.viewmodel
         public Band SelectedBand
         {
             get { return _selectedBand; }
-            set { _selectedBand = value; OnPropertyChanged("SelectedBand"); selectionChanged(); Console.WriteLine("selectedBand: "+SelectedBand); }
+            set { _selectedBand = value; OnPropertyChanged("SelectedBand"); selectionChanged(); }
         }
 
         private ObservableCollection<Genre> _listGenres;
@@ -82,6 +84,15 @@ namespace eindopdracht.viewmodel
             get { return _saveButtonText; }
             set { _saveButtonText = value; OnPropertyChanged("SaveButtonText"); }
         }
+
+        private Byte[] _photo;
+
+        public Byte[] Photo
+        {
+            get { return _photo; }
+            set { _photo = value; OnPropertyChanged("Photo"); }
+        }
+        
           
         #endregion
 
@@ -91,6 +102,7 @@ namespace eindopdracht.viewmodel
             _bandsList = Band.GetBands();
             ListStages = Stage.GetStages();
             ListGenres = Genre.GetGenres();
+            SelectedBand = new Band();
 
             //Text properties
             NewStageText = "New Stage";
@@ -168,14 +180,80 @@ namespace eindopdracht.viewmodel
             //hide button
             newBandVisible = "Hidden";
             SaveButtonText = "Add";
-            Console.WriteLine("newbandvisible: " + newBandVisible);
         }
 
         private void selectionChanged()
         {
             newBandVisible = "Visible";
             SaveButtonText = "Edit";
+            Photo = SelectedBand.Photo;
         }
+
+        public ICommand savaBandCommand
+        {
+            get { return new RelayCommand(saveBandHandler); }
+        }
+
+        private void saveBandHandler()
+        {
+            SelectedBand.Photo = Photo;
+            if (SaveButtonText == "Add")
+            {
+                Band.AddBand(SelectedBand);
+                BandsList = Band.GetBands();
+            }
+            else if (SaveButtonText == "Edit")
+            {
+                Band.EditBand(SelectedBand);
+                BandsList = Band.GetBands();
+            }
+        }
+
+        public ICommand GetPhotoCommand
+        {
+            get { return new RelayCommand(getPhoto); }
+        }
+
+        private void getPhoto()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = ("jpg|*.jpg");
+            string path = "";
+            if (dialog.ShowDialog() == true)
+            {
+                path = dialog.FileName;
+            }
+            if (path != string.Empty)
+            {
+                System.Drawing.Image img = System.Drawing.Image.FromFile(path);
+                MemoryStream me = new MemoryStream();
+                img.Save(me, System.Drawing.Imaging.ImageFormat.Jpeg);
+                Photo = me.ToArray();
+                SelectedBand.Photo = Photo;
+            }
+        }
+
+        //social media
+        public ICommand CheckFacebook
+        {
+            get { return new RelayCommand(CheckFacebookHandler); }
+        }
+
+        private void CheckFacebookHandler()
+        {
+            System.Diagnostics.Process.Start("https://facebook.com/"+SelectedBand.Facebook);
+        }
+
+        public ICommand checkTwitter
+        {
+            get { return new RelayCommand(CheckTwitterHandler); }
+        }
+
+        private void CheckTwitterHandler()
+        {
+            System.Diagnostics.Process.Start("https://twitter.com/" + SelectedBand.Twitter);
+        }
+        
         #endregion
     }
 }

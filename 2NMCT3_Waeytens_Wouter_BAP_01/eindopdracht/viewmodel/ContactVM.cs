@@ -83,9 +83,6 @@ namespace eindopdracht.viewmodel
             AddContactPerson = new ContactPersoon();
             ButtonText = "Add";
             VisibleButton = "Hidden";
-
-            //zwartVlak
-            
         }
         #endregion
 

@@ -28,7 +28,7 @@ namespace eindopdracht.model
 
         public static ObservableCollection<Genre> GetGenres()
         {
-            string sql = "SELECT * FROM Genres";
+            string sql = "SELECT * FROM Genres ORDER BY ID";
             ObservableCollection<Genre> lst = new ObservableCollection<Genre>();
             DbDataReader reader = DataBase.GetData(sql);
             while (reader.Read())
