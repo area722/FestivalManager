@@ -43,11 +43,19 @@ namespace eindopdracht.model
             return lst;
         }
 
-        public static void AddStage(Stage stage)
+        public static void AddStage(string stage)
         {
             string sql = "INSERT INTO Stages (Name) VALUES (@Name)";
-            DbParameter par = DataBase.addparameter("@Name",stage.Name);
+            DbParameter par = DataBase.addparameter("@Name",stage);
             DataBase.modifyData(sql,par);
+        }
+
+        public static void EditStage(Stage stage)
+        {
+            string sql = "UPDATE Stages SET Name=@Name WHERE ID=@Id";
+            DbParameter par = DataBase.addparameter("@Name", stage.Name);
+            DbParameter par1 = DataBase.addparameter("@Id", stage.ID);
+            DataBase.modifyData(sql, par,par1);
         }
     }
 }

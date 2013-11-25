@@ -24,5 +24,13 @@ namespace eindopdracht.view
         {
             InitializeComponent();
         }
+
+        private void ClearText(object sender, RoutedEventArgs e)
+        {
+            if (NewStageTxt.Text == "New Stage")
+            {
+                NewStageTxt.Text = "";
+            }
+        }
     }
 }
