@@ -46,7 +46,7 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <ScrollViewer Grid.Column="0" Margin="7,24,0,24">
+            <ScrollViewer Grid.Column="0" Margin="7,24,0,24" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                 <StackPanel>
                     <ItemsControl ItemsSource="{Binding ContactPersoonLst}">
                         <ItemsControl.ItemTemplate>

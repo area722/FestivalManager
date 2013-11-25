@@ -32,5 +32,13 @@ namespace eindopdracht.view
                 NewStageTxt.Text = "";
             }
         }
+
+        private void ClearTextGenre(object sender, RoutedEventArgs e)
+        {
+            if (NewGenreTxt.Text == "New Genre")
+            {
+                NewGenreTxt.Text = "";
+            }
+        }
     }
 }

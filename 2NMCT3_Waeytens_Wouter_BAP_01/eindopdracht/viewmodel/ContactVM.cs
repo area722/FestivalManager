@@ -50,14 +50,6 @@ namespace eindopdracht.viewmodel
             set { _addContactPerson = value; OnPropertyChanged("AddContactPerson"); }
         }
 
-        private ContactPersoon _editContactPerson;
-
-        public ContactPersoon EditContactPerson
-        {
-            get { return _editContactPerson; }
-            set { _editContactPerson = value; OnPropertyChanged("EditContactPerson"); }
-        }
-        
         private String _addCategorie;
 
         public String AddCategorie
@@ -89,7 +81,6 @@ namespace eindopdracht.viewmodel
             _contactPersoonLst = ContactPersoon.GetContacts();
             _typesList = ContactPersoonType.GetTypes();
             AddContactPerson = new ContactPersoon();
-            EditContactPerson = new ContactPersoon();
             ButtonText = "Add";
             VisibleButton = "Hidden";
 
