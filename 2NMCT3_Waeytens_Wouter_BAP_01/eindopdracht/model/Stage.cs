@@ -42,5 +42,12 @@ namespace eindopdracht.model
             }
             return lst;
         }
+
+        public static void AddStage(Stage stage)
+        {
+            string sql = "INSERT INTO Stages (Name) VALUES (@Name)";
+            DbParameter par = DataBase.addparameter("@Name",stage.Name);
+            DataBase.modifyData(sql,par);
+        }
     }
 }
