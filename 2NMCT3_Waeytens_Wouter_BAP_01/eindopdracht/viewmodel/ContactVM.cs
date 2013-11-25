@@ -84,7 +84,6 @@ namespace eindopdracht.viewmodel
         #endregion
 
         #region ctor
-        //contructor
         public ContactVM()
         {
             _contactPersoonLst = ContactPersoon.GetContacts();
