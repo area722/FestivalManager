@@ -1,0 +1,139 @@
+﻿<UserControl x:Class="eindopdracht.view.Contact"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF45"
+             mc:Ignorable="d" 
+             xmlns:vm="clr-namespace:eindopdracht.viewmodel"
+             d:DesignHeight="708" d:DesignWidth="1024">
+    <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="19*"></RowDefinition>
+            <RowDefinition Height="320*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="0.3*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="searchbox" Grid.Column="0"  TextWrapping="Wrap" Text="Search" Margin="8,8,10,9" Padding="2,2,0,2" Grid.ColumnSpan="2" GotFocus="FocusSearch" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <cmd:EventToCommand Command="{Binding ZoekCommand}" CommandParameter="{Binding Text,ElementName=searchbox}"></cmd:EventToCommand>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <Grid Grid.Row="0" Grid.Column="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <ComboBox x:Name="filter1" Margin="8" Grid.Column="0" ItemsSource="{Binding TypesList}" DisplayMemberPath="Name">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <cmd:EventToCommand Command="{Binding Type1Command}" CommandParameter="{Binding SelectedItem,ElementName=filter1}"></cmd:EventToCommand>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+            <ComboBox x:Name="filter2" Margin="8" Grid.Column="1" ItemsSource="{Binding TypesList}" DisplayMemberPath="Name"></ComboBox>
+            <ComboBox x:Name="filter3"  Margin="8" Grid.Column="2" ItemsSource="{Binding TypesList}" DisplayMemberPath="Name"></ComboBox>
+        </Grid>
+        <Grid Grid.Row="1" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <ScrollViewer Grid.Column="0" Margin="7,24,0,24">
+                <StackPanel>
+                    <ItemsControl ItemsSource="{Binding ContactPersoonLst}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <!--contact-->
+                                <Grid Height="160" Background="#FF22B9B9" Margin="0,0,0,7" >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="32*"/>
+                                        <RowDefinition Height="32*"/>
+                                        <RowDefinition Height="32*"/>
+                                        <RowDefinition Height="32*"/>
+                                        <RowDefinition Height="32*"/>
+                                        <RowDefinition Height="32*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="159*"/>
+                                        <ColumnDefinition Width="353*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Margin="7" Grid.Column="0" Grid.RowSpan="6" Fill="Black" Grid.Row="0"/>
+                                    <Border Grid.Row="0" Margin="7" Grid.Column="0" Grid.RowSpan="6">
+                                        <Image Source="{Binding ImageByte}"/>
+                                    </Border>
+                                    <TextBlock HorizontalAlignment="Left" Margin="10,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Width="149" Height="16"><Run Language="nl-be" Text="{Binding Name}"/></TextBlock>
+                                    <TextBlock HorizontalAlignment="Left" Margin="10,7,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Height="16" Width="27"><Run Language="nl-be" Text="Tel:"/></TextBlock>
+                                    <TextBlock HorizontalAlignment="Left" Margin="31,7,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Height="16" Width="128"><Run Language="nl-be" Text="{Binding Phone}"/></TextBlock>
+                                    <TextBlock HorizontalAlignment="Left" Margin="10,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Height="16" Width="57" Grid.Row="2"><Run Language="nl-be" Text="Categorie:"/></TextBlock>
+                                    <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="68,7,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="103"><Run Language="nl-be" Text="{Binding JobRole.Name}"/></TextBlock>
+                                    <TextBlock HorizontalAlignment="Left" Margin="10,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Height="16" Width="27" Grid.Row="3"><Run Language="nl-be" Text="Stad:"/></TextBlock>
+                                    <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="42,7,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="103"><Run Language="nl-be" Text="{Binding City}"/></TextBlock>
+                                    <TextBlock HorizontalAlignment="Left" Margin="10,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Height="16" Width="38" Grid.Row="4"><Run Language="nl-be" Text="Bedrijf:"/></TextBlock>
+                                    <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="53,7,0,0" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="103"><Run Language="nl-be" Text="{Binding Company}"/></TextBlock>
+                                    <TextBlock HorizontalAlignment="Left" Margin="10,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Height="16" Width="57" Grid.Row="5"><Run Language="nl-be" Text="Email:"/></TextBlock>
+                                    <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="46,5,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="225"><Run Language="nl-be" Text="{Binding Email}"/></TextBlock>
+                                    <Button Opacity="0" Grid.ColumnSpan="2" Grid.RowSpan="6" Command="{Binding DataContext.EditContactCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"></Button>
+                                </Grid>
+                                <!--endcontact-->
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="629*"></RowDefinition>
+                    <RowDefinition Height="11*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <!--add/edit-->
+                <Grid Grid.Row="0" Margin="10,23,10,301" Background="Aqua">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="107*"/>
+                        <ColumnDefinition Width="286*"/>
+                        <ColumnDefinition Width="101*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="37*"/>
+                        <RowDefinition Height="36*"/>
+                        <RowDefinition Height="40*"/>
+                        <RowDefinition Height="39*"/>
+                        <RowDefinition Height="38*"/>
+                        <RowDefinition Height="44*"/>
+                        <RowDefinition Height="51*"/>
+                        <RowDefinition Height="43*"/>
+                    </Grid.RowDefinitions>
+                    <Rectangle Margin="146,7,10,7" Grid.Column="1" Grid.RowSpan="4" Fill="Black" Grid.Row="1"/>
+                    <Border Grid.Row="1" Margin="146,7,10,7" Grid.Column="1" Grid.RowSpan="4">
+                        <Image Source="{Binding AddContactPerson.ImageByte}"/>
+                    </Border>
+                    <Button Grid.Row="1" Margin="146,7,10,7" Grid.Column="1" Grid.RowSpan="4" Command="{Binding GetPhotoCommand}" Opacity="0"/>
+                    <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="0" Margin="61,6,0,0" Height="16" Width="36" Grid.Row="1"><Run Language="nl-be" Text="Naam:"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="77,10,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="20"><Run Language="nl-be" Text="Tel: "/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="44,10,0,0" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Width="62" RenderTransformOrigin="0.516,1.625"><Run Language="nl-be" Text="Categorie:"/></TextBlock>
+                    <Button Content="{Binding ButtonText}" Style="{StaticResource addButton}" Grid.Row="8" Margin="6,7,10,7" Grid.ColumnSpan="3" Command="{Binding SaveContactCommand}" />
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="8,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="1" Text="{Binding AddContactPerson.Name}"/>
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="8,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="2" Text="{Binding AddContactPerson.Phone}" />
+                    <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="6,10,0,0" Grid.Row="6" VerticalAlignment="Top" Width="269" Height="22" ItemsSource="{Binding TypesList}" SelectedItem="{Binding AddContactPerson.JobRole}" DisplayMemberPath="Name"/>
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="6,8,0,0" Grid.Row="7" TextWrapping="Wrap" VerticalAlignment="Top" Width="194" Text="{Binding AddCategorie}"/>
+                    <Button Content="add" Style="{StaticResource addButton}" Grid.Row="7" Margin="205,7,5,0" Grid.Column="1" Height="24" VerticalAlignment="Top" Command="{Binding AddCatCommand}"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="57,14,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="42"><Run Language="nl-be" Text="Bedrijf:"/></TextBlock>
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="8,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="3" Text="{Binding AddContactPerson.Company}" />
+                    <TextBlock HorizontalAlignment="Left" Margin="62,10,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="42"><Run Language="nl-be" Text="Email:"/></TextBlock>
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="8,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="267" Grid.Row="5" Text="{Binding AddContactPerson.Email}" />
+                    <TextBlock HorizontalAlignment="Left" Margin="68,9,0,0" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="31"><Run Language="nl-be" Text="Stad:"/></TextBlock>
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="8,9,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="4" Text="{Binding AddContactPerson.City}" />
+                    <Button Content="New" Grid.Column="2" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Command="{Binding newContactCommand}" Visibility="{Binding VisibleButton}"/>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

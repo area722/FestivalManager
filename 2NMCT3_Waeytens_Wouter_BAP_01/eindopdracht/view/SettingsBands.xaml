@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="eindopdracht.view.SettingsBands"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="706" d:DesignWidth="1024">
+        <!--<TextBlock Text="settings Bands"/>-->
+    <Grid Grid.Row="1" Grid.ColumnSpan="4" Margin="0,0,-0.4,0.4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="118*"/>
+            <ColumnDefinition Width="202*"/>
+            <ColumnDefinition Width="92*"/>
+            <ColumnDefinition Width="141*"/>
+            <ColumnDefinition Width="465*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40px"></RowDefinition>
+            <RowDefinition Height="32*"></RowDefinition>
+            <RowDefinition Height="193*"/>
+            <RowDefinition Height="414*"/>
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Left" Margin="69,14,0,0" TextWrapping="Wrap" Text="Datum:" VerticalAlignment="Top" Height="16" Width="38"/>
+        <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="10.6,10,0,0" VerticalAlignment="Top" Width="145" Height="22"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="162.6,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="15"><Run Language="nl-be" Text="tot"/></TextBlock>
+        <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="183.6,10,0,0" VerticalAlignment="Top" Width="168" Grid.ColumnSpan="3" Height="22">
+            <Button Content="Button" Height="100" Width="75"/>
+        </ComboBox>
+        <TextBlock HorizontalAlignment="Left" Margin="59,10,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="49"><Run Language="nl-be" Text="Podiums:"/></TextBlock>
+        <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10.6,10,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Marquee" VerticalAlignment="Top" Width="167" Grid.RowSpan="2"/>
+        <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10.6,6,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Mainstage" VerticalAlignment="Top" Width="167"/>
+        <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10.6,34,0,0" Grid.Row="2" TextWrapping="Wrap" Text="new poduim" VerticalAlignment="Top" Width="167"/>
+        <Button Content="add" Style="{StaticResource addButton}" Grid.Row="2" Margin="10.6,62,25,108.8" Grid.Column="1"/>
+        <TextBlock HorizontalAlignment="Left" Margin="69,12.2,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="39"><Run Language="nl-be" Text="Genres:"/></TextBlock>
+        <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10.6,14.2,0,0" Grid.Row="3" TextWrapping="Wrap" Text="rock" VerticalAlignment="Top" Width="167"/>
+        <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10.6,42.2,0,0" Grid.Row="3" TextWrapping="Wrap" Text="metal" VerticalAlignment="Top" Width="167"/>
+        <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10.6,70.2,0,0" Grid.Row="3" TextWrapping="Wrap" Text="new genre" VerticalAlignment="Top" Width="167"/>
+        <Button Content="add" Style="{StaticResource addButton}" Grid.Row="3" Margin="10.6,98.2,25,290.4" Grid.Column="1"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,11,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="49" Grid.Column="2"><Run Language="nl-be" Text="Bands:"/></TextBlock>
+        <ListBox Grid.Column="2" HorizontalAlignment="Left" Height="562" Margin="10,34,0,0" Grid.Row="2" VerticalAlignment="Top" Width="207" Grid.RowSpan="2" Grid.ColumnSpan="2" ItemsSource="{Binding BandsList}" SelectedItem="{Binding SelectedBand}"/>
+        <Grid Grid.Column="4" Grid.Row="1" Grid.RowSpan="3" Margin="2.2,0,-0.4,0.4" Background="Aqua">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="101*"/>
+                <ColumnDefinition Width="278*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32*"/>
+                <RowDefinition Height="42*"/>
+                <RowDefinition Height="44*"/>
+                <RowDefinition Height="49*"/>
+                <RowDefinition Height="48*"/>
+                <RowDefinition Height="42*"/>
+                <RowDefinition Height="43*"/>
+                <RowDefinition Height="132*"/>
+                <RowDefinition Height="82*"/>
+                <RowDefinition Height="84*"/>
+                <RowDefinition Height="41*"/>
+            </Grid.RowDefinitions>
+            <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="76"><Run Language="nl-be" Text="edit/add band"/></TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="54,10,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="32"><Run Language="nl-be" Text="naam:"/></TextBlock>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="9.8,9,0,0" Grid.Row="1" TextWrapping="Wrap" Text="silverstein" VerticalAlignment="Top" Width="120"/>
+            <TextBlock HorizontalAlignment="Left" Margin="59,10.4,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="32"><Run Language="nl-be" Text="tel:"/></TextBlock>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="9.8,9.4,0,0" Grid.Row="2" TextWrapping="Wrap" Text="0474780670" VerticalAlignment="Top" Width="120"/>
+            <TextBlock HorizontalAlignment="Left" Margin="59,13.4,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="32"><Run Language="nl-be" Text="fax:"/></TextBlock>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="9.8,12.4,0,0" Grid.Row="3" TextWrapping="Wrap" Text="0474780670" VerticalAlignment="Top" Width="120"/>
+            <TextBlock HorizontalAlignment="Left" Margin="54,13.6,0,0" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="32"><Run Language="nl-be" Text="email:"/></TextBlock>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="9.8,13.6,0,0" Grid.Row="4" TextWrapping="Wrap" Text="silverstein@hotmail.com" VerticalAlignment="Top" Width="191"/>
+            <TextBlock HorizontalAlignment="Left" Margin="32,11.6,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="53"><Run Language="nl-be" Text="facebook:"/></TextBlock>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="8.8,11.6,0,0" Grid.Row="5" TextWrapping="Wrap" Text="facebook.com/silverstein" VerticalAlignment="Top" Width="191"/>
+            <TextBlock HorizontalAlignment="Left" Margin="48,10.2,0,0" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="53"><Run Language="nl-be" Text="twitter:"/></TextBlock>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="8.8,10.2,0,0" Grid.Row="6" TextWrapping="Wrap" Text="#silversteinrock" VerticalAlignment="Top" Width="191"/>
+            <TextBlock HorizontalAlignment="Left" Margin="20,10,0,0" Grid.Row="7" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="81"><Run Language="nl-be" Text="omschrijving:"/></TextBlock>
+            <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="113" Margin="8.8,10,0,0" Grid.Row="7" TextWrapping="Wrap" Text="qslfjqsfjdsqfjqsfnnvxc;wvncvnwxcvwxcbvxcwvnwxcv,nwxcvnwxcvnxcwvnkejhfiosqfkldfjkldfjmjjmlqjfdfjk" VerticalAlignment="Top" Width="288"/>
+            <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="9.8,11,0,0" Grid.Row="8" VerticalAlignment="Top" Width="120" Height="23"/>
+            <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="145.8,11,0,0" Grid.Row="8" VerticalAlignment="Top" Width="120" Height="23"/>
+            <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="8.8,50,0,0" Grid.Row="8" VerticalAlignment="Top" Width="120" Height="23"/>
+            <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="145.8,50,0,0" Grid.Row="8" VerticalAlignment="Top" Width="120" Height="23"/>
+            <TextBlock HorizontalAlignment="Left" Margin="54,11,0,0" Grid.Row="8" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="81" Grid.ColumnSpan="2"><Run Language="nl-be" Text="genres:"/></TextBlock>
+            <Button Content="add/save" Style="{StaticResource addButton}" Grid.Row="10" Margin="10.8,8.6,10.2,10.4" Grid.Column="1"/>
+            <TextBlock HorizontalAlignment="Left" Margin="62,19.4,0,0" Grid.Row="9" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="39"><Run Language="nl-be" Text="foto:"/></TextBlock>
+            <Rectangle Grid.Column="1" Fill="Black" HorizontalAlignment="Left" Height="64" Margin="8.8,10.4,0,0" Grid.Row="9" Stroke="Black" VerticalAlignment="Top" Width="321"/>
+        </Grid>
+        <TextBox Grid.ColumnSpan="2" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="10,6,0,0" Grid.Row="2" TextWrapping="Wrap" Text="zoek een band" VerticalAlignment="Top" Width="152"/>
+        <Button Content="zoek" Grid.Column="3" HorizontalAlignment="Left" Margin="75,6,0,0" Grid.Row="2" VerticalAlignment="Top" Width="50" Height="23"/>
+    </Grid>
+</UserControl>
