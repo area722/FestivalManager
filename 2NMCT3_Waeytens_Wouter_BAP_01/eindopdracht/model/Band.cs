@@ -125,7 +125,6 @@ namespace eindopdracht.model
 
         public static void AddBand(Band band)
         {
-            Console.WriteLine("add");
             String sql = "INSERT INTO Bands (Name,Phone,Fax,Email,Description,Twitter,Facebook,Photo) VALUES (@Name,@Phone,@Fax,@Email,@Description,@Twitter,@Facebook,@Photo)";
             DbParameter par1 = DataBase.addparameter("@Name", band.Name);
             DbParameter par2 = DataBase.addparameter("@Phone", band.Phone);

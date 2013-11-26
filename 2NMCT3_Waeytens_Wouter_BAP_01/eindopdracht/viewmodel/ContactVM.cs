@@ -96,12 +96,12 @@ namespace eindopdracht.viewmodel
         {
             if (ButtonText == "Add")
             {
-                Console.WriteLine("addcontact");
+                //Console.WriteLine("addcontact");
                 ContactPersoon.addContact(AddContactPerson);
             }
             else if (ButtonText == "Edit")
             {
-                Console.WriteLine("editcontact");
+                //Console.WriteLine("editcontact");
                 ContactPersoon.editContact(AddContactPerson);
             }
             ContactPersoonLst = ContactPersoon.GetContacts();

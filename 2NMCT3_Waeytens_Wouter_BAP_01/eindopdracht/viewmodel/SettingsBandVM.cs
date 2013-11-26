@@ -19,13 +19,15 @@ namespace eindopdracht.viewmodel
             get { return "Bands"; }
         }
 
+        Band selected2;
+
         #region properties for binding
         private ObservableCollection<Band> _bandsList;
 
         public ObservableCollection<Band> BandsList
         {
             get { return _bandsList; }
-            set { _bandsList = value; OnPropertyChanged("BandList"); }
+            set { _bandsList = value; OnPropertyChanged("BandsList"); }
         }
 
         private ObservableCollection<Stage> _listStages;
@@ -52,7 +54,6 @@ namespace eindopdracht.viewmodel
             set { _newGenreText = value; OnPropertyChanged("NewGenreText"); }
         }
         
-
         private Band _selectedBand;
 
         public Band SelectedBand
@@ -89,7 +90,7 @@ namespace eindopdracht.viewmodel
 
         public Byte[] Photo
         {
-            get { return _photo; }
+            get {return _photo; }
             set { _photo = value; OnPropertyChanged("Photo"); }
         }
         
@@ -176,6 +177,7 @@ namespace eindopdracht.viewmodel
         private void newBandHandler()
         {
             //clear all fields
+            SelectedBand = null;
             SelectedBand = new Band();
             //hide button
             newBandVisible = "Hidden";
@@ -186,6 +188,10 @@ namespace eindopdracht.viewmodel
         {
             newBandVisible = "Visible";
             SaveButtonText = "Edit";
+            if (SelectedBand != null)
+            {
+                selected2 = SelectedBand;
+            }
             Photo = SelectedBand.Photo;
         }
 
@@ -196,7 +202,7 @@ namespace eindopdracht.viewmodel
 
         private void saveBandHandler()
         {
-            SelectedBand.Photo = Photo;
+            SelectedBand = selected2;
             if (SaveButtonText == "Add")
             {
                 Band.AddBand(SelectedBand);
@@ -231,6 +237,7 @@ namespace eindopdracht.viewmodel
                 Photo = me.ToArray();
                 SelectedBand.Photo = Photo;
             }
+            Photo = SelectedBand.Photo;
         }
 
         //social media
