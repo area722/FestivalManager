@@ -24,12 +24,12 @@
                 <ItemsControl ItemsSource="{Binding LstBands}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Grid Background="Aquamarine" Margin="7">
+                            <Grid Margin="7" Style="{StaticResource {Binding StyleBandLineUp}}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition></RowDefinition>
                                     <RowDefinition></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <Button Opacity="1" Command="{Binding DataContext.LineUpBandCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}" Grid.RowSpan="2"></Button>
+                                <Button Opacity="0" Command="{Binding DataContext.LineUpBandCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}" Grid.RowSpan="2"></Button>
                                 <TextBlock Text="{Binding Name}" Margin="7"></TextBlock>
                                 <TextBlock Text="{Binding Phone}" Grid.Row="1" Margin="7"></TextBlock>
                             </Grid>

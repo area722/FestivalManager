@@ -25,6 +25,35 @@ namespace eindopdracht.viewmodel
             get { return _lstBands; }
             set { _lstBands = value; OnPropertyChanged("LstBands"); }
         }
+
+        private ObservableCollection<Stage> _LstPodiums;
+
+        public ObservableCollection<Stage> LstPodiums
+        {
+            get { return _LstPodiums; }
+            set { _LstPodiums = value; OnPropertyChanged("LstPodiums"); }
+        }
+
+        private string _StyleBandLineUp;
+
+        public string StyleBandLineUp
+        {
+            get { return _StyleBandLineUp; }
+            set { _StyleBandLineUp = value; OnPropertyChanged("StyleBandLineUp"); }
+        }
+        
+   
+        #endregion
+
+        #region properties
+
+        private Band _vorigeBand;
+
+        public Band VorigeBand
+        {
+            get { return _vorigeBand; }
+            set { _vorigeBand = value;}
+        }
         #endregion
 
         #region ctor
@@ -41,17 +70,25 @@ namespace eindopdracht.viewmodel
             get { return new RelayCommand<Band>(LineUpBandHandler); }
         }
 
+        Boolean boolken = true;
         private void LineUpBandHandler(Band band)
         {
-            Console.WriteLine(band.Name);
-        }
-
-        private ObservableCollection<Stage> _LstPodiums;
-
-        public ObservableCollection<Stage> LstPodiums
-        {
-            get { return _LstPodiums; }
-            set { _LstPodiums = value; OnPropertyChanged("LstPodiums"); }
+            if (boolken)
+            {
+                VorigeBand = band;
+                boolken = false;
+            }
+            if (VorigeBand == band)
+            {
+                StyleBandLineUp = "BandLineUp1";
+                Console.WriteLine("zelfde band");
+            }
+            else
+            {
+                VorigeBand = band;
+                StyleBandLineUp = "BandLineUp";
+                Console.WriteLine("andere band");
+            }
         }
         
         #endregion
