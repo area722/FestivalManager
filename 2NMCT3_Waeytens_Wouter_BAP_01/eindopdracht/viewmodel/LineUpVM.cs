@@ -17,6 +17,7 @@ namespace eindopdracht.viewmodel
             get { return "Line-Up"; }
         }
 
+        #region properties for binding
         private ObservableCollection<Band> _lstBands;
 
         public ObservableCollection<Band> LstBands
@@ -24,11 +25,15 @@ namespace eindopdracht.viewmodel
             get { return _lstBands; }
             set { _lstBands = value; OnPropertyChanged("LstBands"); }
         }
+        #endregion
 
+        #region ctor
         public LineUpVM()
         {
             LstBands = Band.GetBands();
+            LstPodiums = Stage.GetStages();
         }
+        #endregion
 
         #region commands
         public ICommand LineUpBandCommand
@@ -40,6 +45,15 @@ namespace eindopdracht.viewmodel
         {
             Console.WriteLine(band.Name);
         }
+
+        private ObservableCollection<Stage> _LstPodiums;
+
+        public ObservableCollection<Stage> LstPodiums
+        {
+            get { return _LstPodiums; }
+            set { _LstPodiums = value; OnPropertyChanged("LstPodiums"); }
+        }
+        
         #endregion
     }
 }
