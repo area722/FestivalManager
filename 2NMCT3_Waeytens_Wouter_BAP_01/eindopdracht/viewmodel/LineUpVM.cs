@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using eindopdracht.model;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using System.Windows.Media;
 
 namespace eindopdracht.viewmodel
 {
@@ -34,19 +35,9 @@ namespace eindopdracht.viewmodel
             set { _LstPodiums = value; OnPropertyChanged("LstPodiums"); }
         }
 
-        private string _StyleBandLineUp;
-
-        public string StyleBandLineUp
-        {
-            get { return _StyleBandLineUp; }
-            set { _StyleBandLineUp = value; OnPropertyChanged("StyleBandLineUp"); }
-        }
-        
-   
         #endregion
 
         #region properties
-
         private Band _vorigeBand;
 
         public Band VorigeBand
@@ -54,6 +45,15 @@ namespace eindopdracht.viewmodel
             get { return _vorigeBand; }
             set { _vorigeBand = value;}
         }
+
+        private Band _selectedBand;
+
+        public Band SelectedBand
+        {
+            get { return _selectedBand; }
+            set { _selectedBand = value; }
+        }
+        
         #endregion
 
         #region ctor
@@ -73,24 +73,24 @@ namespace eindopdracht.viewmodel
         Boolean boolken = true;
         private void LineUpBandHandler(Band band)
         {
+            SelectedBand = band;
             if (boolken)
             {
                 VorigeBand = band;
                 boolken = false;
+                //Console.WriteLine("zelfde band");
             }
             if (VorigeBand == band)
             {
-                StyleBandLineUp = "BandLineUp1";
-                Console.WriteLine("zelfde band");
+                //Console.WriteLine("zelfde band");
             }
             else
             {
                 VorigeBand = band;
-                StyleBandLineUp = "BandLineUp";
-                Console.WriteLine("andere band");
+                //Console.WriteLine("andere band");
             }
+            Console.WriteLine(SelectedBand.Name);
         }
-        
         #endregion
     }
 }

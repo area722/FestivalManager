@@ -26,14 +26,6 @@
             <Setter Property="Margin" Value="0"/>
             
         </Style>
-        
-        <Style TargetType="{x:Type Grid}" x:Key="BandLineUp">
-            <Setter Property="Background" Value="Aquamarine"></Setter>
-         </Style>
-        
-        <Style TargetType="{x:Type Grid}" x:Key="BandLineUp2">
-            <Setter Property="Background" Value="Black"></Setter>
-        </Style>
-        
+                
     </Application.Resources>
 </Application>

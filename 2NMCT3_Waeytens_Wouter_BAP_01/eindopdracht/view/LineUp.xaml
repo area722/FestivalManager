@@ -8,14 +8,15 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="213*"/>
-            <ColumnDefinition Width="811*"/>
+            <ColumnDefinition Width="529*"/>
+            <ColumnDefinition Width="282*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="34*"></RowDefinition>
-            <RowDefinition Height="142*"/>
-            <RowDefinition Height="142*"></RowDefinition>
-            <RowDefinition Height="142*"></RowDefinition>
-            <RowDefinition Height="142*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="26*"></RowDefinition>
+            <RowDefinition Height="28*"></RowDefinition>
+            <RowDefinition Height="254*"></RowDefinition>
         </Grid.RowDefinitions>
         <!--Bands-->
         <TextBlock Grid.Column="0" Grid.Row="0" Text="Bands" FontSize="18" Margin="7"></TextBlock>
@@ -24,7 +25,7 @@
                 <ItemsControl ItemsSource="{Binding LstBands}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Grid Margin="7" Style="{StaticResource {Binding StyleBandLineUp}}">
+                            <Grid Margin="7" Background="{Binding DataContext.StyleBandLineUp, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition></RowDefinition>
                                     <RowDefinition></RowDefinition>
@@ -39,6 +40,71 @@
             </StackPanel>
         </ScrollViewer>
         <!--poduim selector-->
-        <ComboBox Grid.Row="0" Margin="7,7,621,7" Grid.Column="1" ItemsSource="{Binding LstPodiums}" DisplayMemberPath="Name" SelectedIndex="0"></ComboBox>
+        <TextBlock Margin="7,7,462,7" Grid.Column="1" FontSize="18">Stage:</TextBlock>
+        <ComboBox Grid.Row="0" Margin="67,7,279,7" Grid.Column="1" ItemsSource="{Binding LstPodiums}" DisplayMemberPath="Name" SelectedIndex="0"></ComboBox>
+        <!--dag selector-->
+        <TextBlock Margin="280,7,189,7" Grid.Column="1" FontSize="18">Dag:</TextBlock>
+        <ComboBox Grid.Row="0" Margin="328,7,18,7" Grid.Column="1" SelectedIndex="0"></ComboBox>
+        <!--timeslot-->
+        <!--startTime-->
+        <TextBlock Margin="7" Grid.Column="2" FontSize="18">Time:</TextBlock>
+        <Grid Grid.Column="2" Grid.Row="1"  Margin="7">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="43*" />
+                <ColumnDefinition Width="91*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ComboBox Grid.Column="0" Margin="7"></ComboBox>
+                <TextBlock Text="h" Margin="7" FontSize="14" Grid.Column="1"></TextBlock>
+                <ComboBox Grid.Column="2" Margin="7"></ComboBox>
+                <TextBlock Text="m" Margin="7" FontSize="14" Grid.Column="4"></TextBlock>
+            </Grid>
+            <TextBlock Grid.Column="0"  Text="Startime:" FontSize="15" Margin="7"></TextBlock>
+        </Grid>
+        <Grid Grid.Column="2" Grid.Row="2" Margin="7">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="43*" />
+                <ColumnDefinition Width="91*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ComboBox Grid.Column="0" Margin="7"></ComboBox>
+                <TextBlock Text="h" Margin="7" FontSize="14" Grid.Column="1"></TextBlock>
+                <ComboBox Grid.Column="2" Margin="7"></ComboBox>
+                <TextBlock Text="m" Margin="7" FontSize="14" Grid.Column="4"></TextBlock>
+            </Grid>
+            <TextBlock Grid.Column="0"  Text="EndTime:" FontSize="15" Margin="7"></TextBlock>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="2" Margin="7,7,7,14">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="43*" />
+                <ColumnDefinition Width="91*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" FontSize="14" Text="Duration:" Margin="7"></TextBlock>
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ComboBox Grid.Column="0" Margin="7"></ComboBox>
+                <TextBlock Text="h" Margin="7" FontSize="14" Grid.Column="1"></TextBlock>
+                <ComboBox Grid.Column="2" Margin="7"></ComboBox>
+                <TextBlock Text="m" Margin="7" FontSize="14" Grid.Column="4"></TextBlock>
+            </Grid>
+        </Grid>
+        <Button Style="{StaticResource addButton}" Content="+add" Grid.Row="4" Grid.Column="2" Margin="7,7,7,465"></Button>
     </Grid>
 </UserControl>

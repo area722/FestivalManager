@@ -5,14 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.IO;
+using eindopdracht.model;
+using System.Data.Common;
 
 namespace eindopdracht.model
 {
     public class TicketType
     {
-        private String _id;
+        private int _id;
 
-        public String Id
+        public int Id
         {
             get { return _id; }
             set { _id = value; }
@@ -45,22 +47,25 @@ namespace eindopdracht.model
         public static ObservableCollection<TicketType> GetTypesTickets()
         {
             ObservableCollection<TicketType> lst = new ObservableCollection<TicketType>();
-            StreamReader reader = new StreamReader("ticketType.csv");
-            reader.ReadLine();
-            String line = reader.ReadLine();
-            while (line != null)
+            string sql = "SELECT * FROM TicketTypes";
+            DbDataReader reader = DataBase.GetData(sql);
+            while (reader.Read())
             {
-                String[] splitArr = line.Split(';');
-                TicketType type = new TicketType() {Id=splitArr[0],Name=splitArr[1],Price= Convert.ToDouble(splitArr[2]),AvailableTickets = Convert.ToInt32(splitArr[3])};
+                TicketType type = new TicketType()
+                { 
+                    Id = Convert.ToInt32(reader["ID"]),
+                    Name = (string)reader["Type"],
+                    Price = (double)reader["Price"],
+                    AvailableTickets = (int)reader["Aantal"]
+                };
                 lst.Add(type);
-                line = reader.ReadLine();
             }
             return lst;
         }
 
-        public override string ToString()
+        public static void InstertTicketType(TicketType type)
         {
-            return Name;
+            //Console.WriteLine(type.Name);
         }
     }
 }
