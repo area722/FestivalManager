@@ -37,5 +37,10 @@ namespace eindopdracht.viewmodel
             _TicketList = Ticket.GetTickets();
             _ticketTypeList = TicketType.GetTypesTickets();
         }
+
+        public static void updateTicket()
+        {
+            TicketTypeList = TicketType.GetTypesTickets();
+        }
     }
 }

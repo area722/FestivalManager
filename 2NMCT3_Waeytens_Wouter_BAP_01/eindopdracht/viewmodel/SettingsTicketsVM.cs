@@ -84,10 +84,11 @@ namespace eindopdracht.viewmodel
                 TicketType.InstertTicketType(SaveTicketType);
             }
             if (TextEditSaveType == "Edit")
-            { 
-                
+            {
+                TicketType.EditTicketType(SaveTicketType);
             }
             TicketTypeList = TicketType.GetTypesTickets();
+
         }
 
         public ICommand editTypeCommand
@@ -111,11 +112,26 @@ namespace eindopdracht.viewmodel
 
         private void newTypeHandler()
         {
-            Console.WriteLine("command");
             visibleButton = "Hidden";
             SaveTicketType = new TicketType();
             TextEditSaveType = "Save";
         }
+
+
+        public ICommand DeleteTypeCommand
+        {
+            get { return new RelayCommand<TicketType>(deleteHandler); }
+        }
+
+        private void deleteHandler(TicketType type)
+        {
+            SaveTicketType = new TicketType();
+            visibleButton = "Hidden";
+            TextEditSaveType = "Save";
+            TicketType.DeleteTicketType(type);
+            TicketTypeList = TicketType.GetTypesTickets();
+        }
+
         #endregion
     }
 }

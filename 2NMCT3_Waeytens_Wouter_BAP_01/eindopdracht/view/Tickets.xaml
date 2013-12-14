@@ -34,7 +34,6 @@
                                 <TextBlock Text="{Binding Name}" FontSize="20" ></TextBlock>
                                 <TextBlock Text="{Binding AvailableTickets}" FontSize="16"></TextBlock>
                             </StackPanel>
-                            <!--<Button Content="{Binding Name}" Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}" Style="{StaticResource navButton}"/>-->
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

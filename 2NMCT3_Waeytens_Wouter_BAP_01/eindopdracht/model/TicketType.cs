@@ -66,6 +66,28 @@ namespace eindopdracht.model
         public static void InstertTicketType(TicketType type)
         {
             //Console.WriteLine(type.Name);
+            string sql = "INSERT INTO TicketTypes (Type,Aantal,Price) VALUES (@name,@aantal,@price)";
+            DbParameter par1 = DataBase.addparameter("@name",type.Name);
+            DbParameter par2 = DataBase.addparameter("@aantal",type.AvailableTickets);
+            DbParameter par3 = DataBase.addparameter("@price",type.Price);
+            DataBase.modifyData(sql,par1,par2,par3);
+        }
+
+        public static void EditTicketType(TicketType type)
+        {
+            string sql = "UPDATE TicketTypes SET Type=@type,Aantal=@aantal,Price=@price WHERE ID=@id";
+            DbParameter par1 = DataBase.addparameter("@type",type.Name);
+            DbParameter par2 = DataBase.addparameter("@aantal",type.AvailableTickets);
+            DbParameter par3 = DataBase.addparameter("@price",type.Price);
+            DbParameter par4 = DataBase.addparameter("@id", type.Id);
+            DataBase.modifyData(sql,par1,par2,par3,par4);
+        }
+
+        public static void DeleteTicketType(TicketType type)
+        {
+            string sql = "DELETE FROM TicketTypes WHERE ID=@id";
+            DbParameter par1 = DataBase.addparameter("@id",type.Id);
+            DataBase.modifyData(sql,par1);
         }
     }
 }
