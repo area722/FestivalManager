@@ -88,6 +88,35 @@ namespace eindopdracht.model
             string sql = "DELETE FROM TicketTypes WHERE ID=@id";
             DbParameter par1 = DataBase.addparameter("@id",type.Id);
             DataBase.modifyData(sql,par1);
+
+            //gereserveerde tickets verwijderen
+            string sql2 = "DELETE FROM Tickets WHERE Type=@typeId";
+            DbParameter par2 = DataBase.addparameter("@typeId",type.Id);
+            DataBase.modifyData(sql2,par2);
+        }
+
+        public static TicketType GetById(int id)
+        {
+            string sql = "SELECT * FROM TicketTypes WHERE ID=@id";
+            DbParameter par = DataBase.addparameter("@id",id);
+            DbDataReader reader = DataBase.GetData(sql,par);
+            TicketType type = new TicketType();
+            while (reader.Read())
+            {
+                type = new TicketType()
+                {
+                    Id = (int)reader["ID"],
+                    Name = (string)reader["Type"],
+                    Price = (double)reader["Price"],
+                    AvailableTickets =  (int)reader["Aantal"]
+                };
+            }
+            return type;
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

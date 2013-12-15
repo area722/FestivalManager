@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Drawing;
 using System.Windows.Media.Imaging;
 using System.IO;
+using System.Windows;
 
 namespace eindopdracht.viewmodel
 {
@@ -193,6 +194,29 @@ namespace eindopdracht.viewmodel
             }
             if (term == string.Empty)
             {
+                ContactPersoonLst = ContactPersoon.GetContacts();
+            }
+        }
+
+
+        public ICommand DeleteContactCommand
+        {
+            get { return new RelayCommand<ContactPersoon>(deleteHandler); }
+        }
+
+        private void deleteHandler(ContactPersoon person)
+        {
+            //alle gereserveerde tickets met dat type ook verwijderen en waarschuwen met een dialogbox
+            string sMessageBoxText = "Weet je zeker dat je " + person.Name + " wil verwijderen?";
+            string sCaption = "Bent u zeker?";
+
+            MessageBoxButton btnMessageBox = MessageBoxButton.YesNo;
+            MessageBoxImage icnMessageBox = MessageBoxImage.Question;
+
+            MessageBoxResult rsltMessageBox = MessageBox.Show(sMessageBoxText, sCaption, btnMessageBox, icnMessageBox);
+            if (rsltMessageBox == MessageBoxResult.Yes)
+            {
+                ContactPersoon.DeleteContactPerson(person);
                 ContactPersoonLst = ContactPersoon.GetContacts();
             }
         }

@@ -15,6 +15,7 @@ namespace eindopdracht.viewmodel
             get { return "Tickets"; }
         }
 
+        #region properties for binding
         private ObservableCollection<Ticket> _TicketList;
 
         public ObservableCollection<Ticket> TicketList
@@ -30,17 +31,37 @@ namespace eindopdracht.viewmodel
             get { return _ticketTypeList; }
             set { _ticketTypeList = value; OnPropertyChanged("TicketTypeList"); }
         }
-        
 
+        private Ticket _SelectedTicket;
+
+        public Ticket SelectedTicket
+        {
+            get { return _SelectedTicket; }
+            set { _SelectedTicket = value; OnPropertyChanged("SelectedTicket"); selectedTicketChange(); }
+        }        
+        #endregion
+
+        private void selectedTicketChange()
+        {
+            Console.WriteLine(SelectedTicket.TicketHolder);
+            if (SelectedTicket != null)
+            { 
+                //display print button
+            }
+        }
+
+        #region ctor
         public TicketsVM()
         {
             _TicketList = Ticket.GetTickets();
             _ticketTypeList = TicketType.GetTypesTickets();
-        }
 
-        public static void updateTicket()
-        {
-            TicketTypeList = TicketType.GetTypesTickets();
+            //er moet een mogelijkheid bestaan om als een tickettype is opgeslagen of een ticket gereserveerd om deze lijst op te daten
         }
+        #endregion
+
+        #region commands
+
+        #endregion
     }
 }

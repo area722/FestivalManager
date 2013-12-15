@@ -9,6 +9,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
 using System.IO;
+using System.Windows;
 
 namespace eindopdracht.viewmodel
 {
@@ -93,8 +94,14 @@ namespace eindopdracht.viewmodel
             get {return _photo; }
             set { _photo = value; OnPropertyChanged("Photo"); }
         }
-        
-          
+
+        private Festival _dates;
+
+        public Festival Dates
+        {
+            get { return _dates; }
+            set { _dates = value; OnPropertyChanged("Dates"); }
+        }
         #endregion
 
         #region ctor
@@ -112,6 +119,14 @@ namespace eindopdracht.viewmodel
 
             //Visible new button
             newBandVisible = "Hidden";
+
+            //dates
+            Dates = Festival.GetDates();
+            if (Dates.StartDate == Convert.ToDateTime("1/01/0001 0:00:00") || Dates.EndDate == Convert.ToDateTime("1/01/0001 0:00:00"))
+            {
+                Dates.StartDate = DateTime.Today;
+                Dates.EndDate = DateTime.Today.AddDays(1);
+            }
         }
         #endregion
 
@@ -238,6 +253,19 @@ namespace eindopdracht.viewmodel
                 SelectedBand.Photo = Photo;
             }
             Photo = SelectedBand.Photo;
+        }
+
+
+        public ICommand SaveDateCommand
+        {
+            get { return new RelayCommand(saveDateHandler); }
+        }
+
+        private void saveDateHandler()
+        {
+            Festival.UpdateDate(Dates);
+            Dates = Festival.GetDates();
+            MessageBox.Show("Datum "+Dates.StartDate.ToString("dd/MM/yyyy")+" - "+Dates.EndDate.ToString("dd/MM/yyyy")+" is succesvol opgeslagen");
         }
 
         //social media

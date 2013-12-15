@@ -38,8 +38,6 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ComboBox>
-            <ComboBox x:Name="filter2" Margin="8" Grid.Column="1" ItemsSource="{Binding TypesList}" DisplayMemberPath="Name"></ComboBox>
-            <ComboBox x:Name="filter3"  Margin="8" Grid.Column="2" ItemsSource="{Binding TypesList}" DisplayMemberPath="Name"></ComboBox>
         </Grid>
         <Grid Grid.Row="1" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
@@ -81,6 +79,7 @@
                                     <TextBlock HorizontalAlignment="Left" Margin="10,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Height="16" Width="57" Grid.Row="5"><Run Language="nl-be" Text="Email:"/></TextBlock>
                                     <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="46,5,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="225"><Run Language="nl-be" Text="{Binding Email}"/></TextBlock>
                                     <Button Opacity="0" Grid.ColumnSpan="2" Grid.RowSpan="6" Command="{Binding DataContext.EditContactCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"></Button>
+                                    <Button Grid.Column="1" HorizontalAlignment="Right" Content="X" Command="{Binding DataContext.DeleteContactCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"></Button>
                                 </Grid>
                                 <!--endcontact-->
                             </DataTemplate>

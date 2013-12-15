@@ -179,5 +179,12 @@ namespace eindopdracht.model
             }
             return lst;
         }
+
+        public static void DeleteContactPerson(ContactPersoon person)
+        {
+            string sql = "DELETE FROM ContactPersons WHERE ID=@id";
+            DbParameter par = DataBase.addparameter("@id",person.Id);
+            DataBase.modifyData(sql,par);
+        }
     }
 }

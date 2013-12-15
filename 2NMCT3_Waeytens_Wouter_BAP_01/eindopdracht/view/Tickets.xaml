@@ -16,29 +16,28 @@
                 <ColumnDefinition Width="254*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="19*"></RowDefinition>
-                <RowDefinition Height="320*"/>
+                <RowDefinition Height="20*"></RowDefinition>
+                <RowDefinition Height="141*"/>
+                <RowDefinition Height="193*"/>
             </Grid.RowDefinitions>
-            <DataGrid Grid.ColumnSpan="3" Margin="7" Grid.Row="2" ItemsSource="{Binding TicketList}" />
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,5,0,0" Grid.Row="0" TextWrapping="Wrap" Text="Zoek" VerticalAlignment="Top" Width="234"/>
-        <Button Content="zoek" HorizontalAlignment="Left" Margin="254,5,0,0" Grid.Row="0" VerticalAlignment="Top" Width="75" Grid.ColumnSpan="2" Height="23"/>
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="94.6,9,0,0" Grid.Row="0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="nl-be" Text="type:"/></TextBlock>
-        <ComboBox Grid.ColumnSpan="2" Grid.Column="1" HorizontalAlignment="Left" Margin="134.6,6,0,0" Grid.Row="0" VerticalAlignment="Top" Width="139" ItemsSource="{Binding TicketTypeList}"/>
-        <ComboBox Grid.Column="2" Margin="33.2,5,83.2,0" Grid.Row="0" VerticalAlignment="Top" Grid.ColumnSpan="2" ItemsSource="{Binding TicketTypeList}"/>
-        <ComboBox Grid.Column="3" HorizontalAlignment="Left" Margin="46.491,6,0,0" Grid.Row="0" VerticalAlignment="Top" Width="140" Grid.ColumnSpan="2" ItemsSource="{Binding TicketTypeList}"/>
-        <StackPanel Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2">
-                <ItemsControl ItemsSource="{Binding TicketTypeList}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                            <StackPanel Margin="0,0,0,5">
-                                <TextBlock Text="{Binding Name}" FontSize="20" ></TextBlock>
-                                <TextBlock Text="{Binding AvailableTickets}" FontSize="16"></TextBlock>
-                            </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-            
-        </StackPanel>
-     </Grid>
-   </Grid>
+            <DataGrid Grid.ColumnSpan="3" Margin="7" Grid.Row="1" ItemsSource="{Binding TicketList}" Grid.RowSpan="2" SelectedItem="{Binding SelectedTicket}"/>
+            <TextBox HorizontalAlignment="Left" Height="23" Margin="10,7,0,0" Grid.Row="0" TextWrapping="Wrap" Text="Zoek" VerticalAlignment="Top" Width="336" Grid.ColumnSpan="2"/>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="95,9,0,0" Grid.Row="0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="nl-be" Text="type:"/></TextBlock>
+            <ComboBox Grid.ColumnSpan="2" Grid.Column="1" HorizontalAlignment="Left" Margin="135,6,0,0" Grid.Row="0" VerticalAlignment="Top" Width="157" ItemsSource="{Binding TicketTypeList}" DisplayMemberPath="Name"/>
+            <ScrollViewer Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Margin="7">
+                <StackPanel>
+                    <ItemsControl ItemsSource="{Binding TicketTypeList}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}" FontSize="20" ></TextBlock>
+                                    <TextBlock Text="{Binding AvailableTickets}" FontSize="16"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>           
+        </Grid>
+    </Grid>
 </UserControl>
