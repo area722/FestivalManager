@@ -74,6 +74,15 @@ namespace eindopdracht.viewmodel
             get { return _visibleButton; }
             set { _visibleButton = value; OnPropertyChanged("VisibleButton"); }
         }
+
+        private int _selectedIndexType;
+
+        public int SelectedIndexType
+        {
+            get { return _selectedIndexType; }
+            set { _selectedIndexType = value; OnPropertyChanged("SelectedIndexType"); }
+        }
+        
         #endregion
 
         #region ctor
@@ -137,6 +146,17 @@ namespace eindopdracht.viewmodel
                 MemoryStream me = new MemoryStream();
                 black.Save(me, System.Drawing.Imaging.ImageFormat.Jpeg);
                 AddContactPerson.ImageByte = me.ToArray();
+            }
+
+            List<string> lst = new List<string>();
+            foreach (ContactPersoonType type in TypesList)
+            {
+                lst.Add(type.Name);
+            }
+            SelectedIndexType = lst.IndexOf(person.JobRole.Name);
+            if (SelectedIndexType == -1)
+            {
+                SelectedIndexType = 0;
             }
         }
 

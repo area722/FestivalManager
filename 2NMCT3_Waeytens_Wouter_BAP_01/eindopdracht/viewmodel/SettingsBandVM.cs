@@ -20,8 +20,6 @@ namespace eindopdracht.viewmodel
             get { return "Bands"; }
         }
 
-        Band selected2;
-
         #region properties for binding
         private ObservableCollection<Band> _bandsList;
 
@@ -205,9 +203,8 @@ namespace eindopdracht.viewmodel
             SaveButtonText = "Edit";
             if (SelectedBand != null)
             {
-                selected2 = SelectedBand;
-            }
-            Photo = SelectedBand.Photo;
+                Photo = SelectedBand.Photo;
+            } 
         }
 
         public ICommand savaBandCommand
@@ -217,16 +214,43 @@ namespace eindopdracht.viewmodel
 
         private void saveBandHandler()
         {
-            SelectedBand = selected2;
             if (SaveButtonText == "Add")
             {
+                if (Photo == null)
+                {
+                    //zwartVak
+                    System.Drawing.Image black = System.Drawing.Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "black.jpg");
+                    MemoryStream me = new MemoryStream();
+                    black.Save(me, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    SelectedBand.Photo = me.ToArray();
+                    Photo = SelectedBand.Photo;
+                }
+                else 
+                {
+                    SelectedBand.Photo = Photo;
+                }
                 Band.AddBand(SelectedBand);
                 BandsList = Band.GetBands();
             }
             else if (SaveButtonText == "Edit")
             {
+                if (Photo == null)
+                {
+                    Console.WriteLine("photo null edit");
+                    //zwartVak
+                    System.Drawing.Image black = System.Drawing.Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "black.jpg");
+                    MemoryStream me = new MemoryStream();
+                    black.Save(me, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    SelectedBand.Photo = me.ToArray();
+                    Photo = SelectedBand.Photo;
+                }
+                else
+                {
+                    SelectedBand.Photo = Photo;
+                }
                 Band.EditBand(SelectedBand);
                 BandsList = Band.GetBands();
+                Photo = null;
             }
         }
 

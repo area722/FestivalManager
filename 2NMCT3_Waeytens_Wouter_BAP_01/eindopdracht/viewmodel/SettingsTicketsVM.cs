@@ -180,8 +180,16 @@ namespace eindopdracht.viewmodel
         private void reserveHandler()
         {
             Ticket.ReserveTicket(ReserveTicket);
-            MessageBox.Show("Ticket Reserved for " + ReserveTicket.TicketHolder);
-            ReserveTicket = new Ticket();
+            if (ReserveTicket.TicketType.AvailableTickets < ReserveTicket.Amount)
+            {
+                MessageBox.Show("Er kunnen geen tickets meer gereserveerd worden voor het type " + ReserveTicket.TicketType.Name);
+            }
+            else
+            {
+                MessageBox.Show("Ticket Reserved for " + ReserveTicket.TicketHolder);
+                ReserveTicket = new Ticket();
+                TicketTypeList = TicketType.GetTypesTickets();
+            }
         }
 
         #endregion

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using eindopdracht.model;
+using System.Windows.Input;
 
 namespace eindopdracht.viewmodel
 {
@@ -38,15 +39,29 @@ namespace eindopdracht.viewmodel
         {
             get { return _SelectedTicket; }
             set { _SelectedTicket = value; OnPropertyChanged("SelectedTicket"); selectedTicketChange(); }
-        }        
+        }
+
+        private string _viewPrintButton;
+
+        public string viewPrintButton
+        {
+            get { return _viewPrintButton; }
+            set { _viewPrintButton = value; OnPropertyChanged("viewPrintButton"); }
+        }
+        
         #endregion
 
         private void selectedTicketChange()
         {
             Console.WriteLine(SelectedTicket.TicketHolder);
             if (SelectedTicket != null)
-            { 
+            {
                 //display print button
+                viewPrintButton = "Visible";
+            }
+            else
+            {
+                viewPrintButton = "Hidden";
             }
         }
 
@@ -55,12 +70,24 @@ namespace eindopdracht.viewmodel
         {
             _TicketList = Ticket.GetTickets();
             _ticketTypeList = TicketType.GetTypesTickets();
+            viewPrintButton = "Hidden";
 
             //er moet een mogelijkheid bestaan om als een tickettype is opgeslagen of een ticket gereserveerd om deze lijst op te daten
+
         }
         #endregion
 
         #region commands
+
+        public ICommand PrintTicketCommand
+        {
+            get { return new RelayCommand(printHandler); }
+        }
+
+        private void printHandler()
+        {
+            //code for generating word doc
+        }
 
         #endregion
     }

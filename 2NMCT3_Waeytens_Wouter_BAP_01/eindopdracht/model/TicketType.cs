@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using eindopdracht.model;
 using System.Data.Common;
+using System.Windows;
 
 namespace eindopdracht.model
 {
@@ -65,12 +66,26 @@ namespace eindopdracht.model
 
         public static void InstertTicketType(TicketType type)
         {
-            //Console.WriteLine(type.Name);
-            string sql = "INSERT INTO TicketTypes (Type,Aantal,Price) VALUES (@name,@aantal,@price)";
-            DbParameter par1 = DataBase.addparameter("@name",type.Name);
-            DbParameter par2 = DataBase.addparameter("@aantal",type.AvailableTickets);
-            DbParameter par3 = DataBase.addparameter("@price",type.Price);
-            DataBase.modifyData(sql,par1,par2,par3);
+            string sql1 = "SELECT * FROM TicketTypes WHERE Type=@type";
+            DbParameter namePar = DataBase.addparameter("@type",type.Name);
+            DbDataReader reader = DataBase.GetData(sql1,namePar);
+            List<int> lst = new List<int>();
+            while (reader.Read())
+            {
+                lst.Add((int)reader["ID"]);
+            }
+            if (lst.Count == 1)
+            {
+                MessageBox.Show("Het type " + type.Name + " bestaat al");
+            }
+            else
+            {
+                string sql = "INSERT INTO TicketTypes (Type,Aantal,Price) VALUES (@name,@aantal,@price)";
+                DbParameter par1 = DataBase.addparameter("@name", type.Name);
+                DbParameter par2 = DataBase.addparameter("@aantal", type.AvailableTickets);
+                DbParameter par3 = DataBase.addparameter("@price", type.Price);
+                DataBase.modifyData(sql, par1, par2, par3);
+            }
         }
 
         public static void EditTicketType(TicketType type)

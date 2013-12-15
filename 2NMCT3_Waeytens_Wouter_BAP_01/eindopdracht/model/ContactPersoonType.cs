@@ -30,7 +30,6 @@ namespace eindopdracht.model
         public static ObservableCollection<ContactPersoonType> GetTypes()
         {
             ObservableCollection<ContactPersoonType> lst = new ObservableCollection<ContactPersoonType>();
-            lst.Add(new ContactPersoonType() { Id=0,Name="none"});
             string sql = "SELECT * FROM ContactTypes";
             DbDataReader reader = DataBase.GetData(sql);
             while (reader.Read())

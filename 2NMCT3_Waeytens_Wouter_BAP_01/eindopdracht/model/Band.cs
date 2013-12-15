@@ -126,6 +126,7 @@ namespace eindopdracht.model
 
         public static void AddBand(Band band)
         {
+            Console.WriteLine("add band");
             String sql = "INSERT INTO Bands (Name,Phone,Fax,Email,Description,Twitter,Facebook,Photo) VALUES (@Name,@Phone,@Fax,@Email,@Description,@Twitter,@Facebook,@Photo)";
             DbParameter par1 = DataBase.addparameter("@Name", band.Name);
             DbParameter par2 = DataBase.addparameter("@Phone", band.Phone);
@@ -140,7 +141,7 @@ namespace eindopdracht.model
 
         public static void EditBand(Band band)
         {
-            Console.WriteLine("edit");
+            Console.WriteLine("edit band");
             String sql = "UPDATE Bands SET Name=@Name,Phone=@Phone,Fax=@Fax,Email=@Email,Description=@Description,Twitter=@Twitter,Facebook=@Facebook,Photo=@Photo WHERE ID=@Id";
             DbParameter par = DataBase.addparameter("@Id",band.ID);
             DbParameter par1 = DataBase.addparameter("@Name", band.Name);

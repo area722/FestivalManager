@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Data.Common;
+using System.Windows;
 
 namespace eindopdracht.model
 {
@@ -83,15 +84,33 @@ namespace eindopdracht.model
 
         public static void ReserveTicket(Ticket ticket)
         {
-            string sql = "INSERT INTO Tickets(Holder,HolderEmail,Type,Aantal,Reserved) VALUES(@holder,@email,@type,@aantal,@reserved)";
-            DbParameter par1 = DataBase.addparameter("@holder",ticket.TicketHolder);
-            DbParameter par2 = DataBase.addparameter("@email",ticket.TicketHolderEmail);
-            DbParameter par3 = DataBase.addparameter("@type",ticket.TicketType.Id);
-            DbParameter par4 = DataBase.addparameter("@aantal",ticket.Amount);
-            DbParameter par5 = DataBase.addparameter("@reserved","Yes");
-            DataBase.modifyData(sql,par1,par2,par3,par4,par5);
-
             //totaal aantal voor dat type verminderen
+            string sql1 = "SELECT Aantal FROM TicketTypes WHERE ID=@id";
+            DbParameter par6 = DataBase.addparameter("@id",ticket.TicketType.Id);
+            DbDataReader reader = DataBase.GetData(sql1,par6);
+            int aantal = 0;
+            while (reader.Read())
+            {
+                aantal = (int)reader["Aantal"];
+            }
+
+            aantal -= ticket.Amount;
+            if (aantal >= 0)
+            {
+                //vermindering wegschijven in database.
+                string sql2 = "UPDATE TicketTypes SET Aantal=@aantal WHERE ID=@id";
+                DbParameter aantalPar = DataBase.addparameter("@aantal",aantal);
+                DbParameter idPar = DataBase.addparameter("@id",ticket.TicketType.Id);
+                DataBase.modifyData(sql2,aantalPar,idPar);
+
+                string sql = "INSERT INTO Tickets(Holder,HolderEmail,Type,Aantal,Reserved) VALUES(@holder,@email,@type,@aantal,@reserved)";
+                DbParameter par1 = DataBase.addparameter("@holder", ticket.TicketHolder);
+                DbParameter par2 = DataBase.addparameter("@email", ticket.TicketHolderEmail);
+                DbParameter par3 = DataBase.addparameter("@type", ticket.TicketType.Id);
+                DbParameter par4 = DataBase.addparameter("@aantal", ticket.Amount);
+                DbParameter par5 = DataBase.addparameter("@reserved", "Yes");
+                DataBase.modifyData(sql, par1, par2, par3, par4, par5);
+            }
         }
 
 
