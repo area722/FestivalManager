@@ -214,6 +214,7 @@ namespace eindopdracht.viewmodel
             if (SelectedBand != null)
             {
                 Photo = SelectedBand.Photo;
+                SelectedBand = Band.GetBandByid(SelectedBand);
             } 
         }
 
@@ -311,6 +312,18 @@ namespace eindopdracht.viewmodel
         private void AddGenreBandHandler()
         {
             Band.addGenreToBand(SelectedBand,SelectedAddGenreToBand);
+            SelectedBand = Band.GetBandByid(SelectedBand);
+        }
+
+        public ICommand DeleteGenreFromBandCommand
+        {
+            get { return new RelayCommand<Genre>(deleteGenreFromBandHandler); }
+        }
+
+        private void deleteGenreFromBandHandler(Genre genre)
+        {
+            Band.DeleteGenreFromBand(SelectedBand,genre);
+            SelectedBand = Band.GetBandByid(SelectedBand);
         }
 
         //social media

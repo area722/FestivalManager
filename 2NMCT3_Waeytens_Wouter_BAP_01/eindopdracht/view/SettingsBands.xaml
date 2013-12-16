@@ -100,7 +100,7 @@
                             <DataTemplate>
                                 <Grid Background="Beige" Margin="3">
                                     <TextBlock Text="{Binding Name}" Margin="5"></TextBlock>
-                                    <Button Content="X" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="7" Command="{Binding DeleteGenreFromBandCommand}"></Button>
+                                    <Button Content="X" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="7" Command="{Binding DataContext.DeleteGenreFromBandCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"></Button>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
