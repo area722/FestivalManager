@@ -214,7 +214,6 @@ namespace eindopdracht.viewmodel
             if (SelectedBand != null)
             {
                 Photo = SelectedBand.Photo;
-                SelectedBand = Band.GetBandByid(SelectedBand);
             } 
         }
 
@@ -324,6 +323,7 @@ namespace eindopdracht.viewmodel
         {
             Band.DeleteGenreFromBand(SelectedBand,genre);
             SelectedBand = Band.GetBandByid(SelectedBand);
+            BandsList = Band.GetBands();          
         }
 
         //social media

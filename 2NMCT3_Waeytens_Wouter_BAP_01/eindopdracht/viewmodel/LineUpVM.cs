@@ -70,26 +70,9 @@ namespace eindopdracht.viewmodel
             get { return new RelayCommand<Band>(LineUpBandHandler); }
         }
 
-        Boolean boolken = true;
-        private void LineUpBandHandler(Band band)
+        private void LineUpBandHandler(Band obj)
         {
-            SelectedBand = band;
-            if (boolken)
-            {
-                VorigeBand = band;
-                boolken = false;
-                //Console.WriteLine("zelfde band");
-            }
-            if (VorigeBand == band)
-            {
-                //Console.WriteLine("zelfde band");
-            }
-            else
-            {
-                VorigeBand = band;
-                //Console.WriteLine("andere band");
-            }
-            Console.WriteLine(SelectedBand.Name);
+            throw new NotImplementedException();
         }
         #endregion
     }

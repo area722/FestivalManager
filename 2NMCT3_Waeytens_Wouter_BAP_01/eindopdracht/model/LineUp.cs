@@ -55,5 +55,7 @@ namespace eindopdracht.model
             get { return _band; }
             set { _band = value; }
         }
+
+
     }
 }
