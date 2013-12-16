@@ -24,5 +24,13 @@ namespace eindopdracht.view
         {
             InitializeComponent();
         }
+
+        private void FocusSearch(object sender, RoutedEventArgs e)
+        {
+            if(SearchField.Text == "Search")
+            {
+                SearchField.Text = "";
+            }
+        }
     }
 }

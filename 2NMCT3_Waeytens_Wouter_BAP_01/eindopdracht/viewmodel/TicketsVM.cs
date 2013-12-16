@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using eindopdracht.model;
 using System.Windows.Input;
+using System.Windows;
 
 namespace eindopdracht.viewmodel
 {
@@ -48,8 +49,49 @@ namespace eindopdracht.viewmodel
             get { return _viewPrintButton; }
             set { _viewPrintButton = value; OnPropertyChanged("viewPrintButton"); }
         }
-        
+
+
+        private Ticket _reserveTicket;
+
+        public Ticket ReserveTicket
+        {
+            get { return _reserveTicket; }
+            set { _reserveTicket = value; OnPropertyChanged("ReserveTicket"); }
+        }
+
+        private ObservableCollection<int> _lstAantalTickets;
+
+        public ObservableCollection<int> lstAantalTickets
+        {
+            get { return _lstAantalTickets; }
+            set { _lstAantalTickets = value; OnPropertyChanged("lstAantalTickets"); }
+        }      
         #endregion
+
+        #region ctor
+        public TicketsVM()
+        {
+            _TicketList = Ticket.GetTickets();
+            _ticketTypeList = TicketType.GetTypesTickets();
+            viewPrintButton = "Hidden";
+
+            //reserve ticket
+            ReserveTicket = new Ticket();
+            lstAantalTickets = aantalTicketsFill();
+            TicketTypeList = TicketType.GetTypesTickets();
+        }
+        #endregion
+
+        #region methods
+        private ObservableCollection<int> aantalTicketsFill()
+        {
+            ObservableCollection<int> lst = new ObservableCollection<int>();
+            for (int i = 1; i < 11; i++)
+            {
+                lst.Add(i);
+            }
+            return lst;
+        }
 
         private void selectedTicketChange()
         {
@@ -64,17 +106,6 @@ namespace eindopdracht.viewmodel
                 viewPrintButton = "Hidden";
             }
         }
-
-        #region ctor
-        public TicketsVM()
-        {
-            _TicketList = Ticket.GetTickets();
-            _ticketTypeList = TicketType.GetTypesTickets();
-            viewPrintButton = "Hidden";
-
-            //er moet een mogelijkheid bestaan om als een tickettype is opgeslagen of een ticket gereserveerd om deze lijst op te daten
-
-        }
         #endregion
 
         #region commands
@@ -87,6 +118,40 @@ namespace eindopdracht.viewmodel
         private void printHandler()
         {
             //code for generating word doc
+        }
+
+        public ICommand ReserveTicketCommand
+        {
+            get { return new RelayCommand(reserveHandler); }
+        }
+
+        private void reserveHandler()
+        {
+            Ticket.ReserveTicket(ReserveTicket);
+            TicketList = Ticket.GetTickets();
+            ReserveTicket = new Ticket();
+            TicketTypeList = TicketType.GetTypesTickets();
+        }
+
+
+        public ICommand UpdateTicketTypesCommand
+        {
+            get { return new RelayCommand(UpdateTicketTypesHandler); }
+        }
+
+        private void UpdateTicketTypesHandler()
+        {
+            TicketTypeList = TicketType.GetTypesTickets();
+        }
+
+        public ICommand UpdateRerservedTicketsCommand
+        {
+            get { return new RelayCommand(UpdateReservedHandler); }
+        }
+
+        private void UpdateReservedHandler()
+        {
+            TicketList = Ticket.GetTickets();
         }
 
         #endregion

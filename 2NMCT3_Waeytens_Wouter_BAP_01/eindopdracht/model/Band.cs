@@ -84,21 +84,13 @@ namespace eindopdracht.model
             set { _facebook = value; }
         }
 
-        //private String _genres;
+        private ObservableCollection<Genre> _genres;
 
-        //public String Genres
-        //{
-        //    get { return _genres; }
-        //    set { _genres = value; }
-        //}
-
-        //private ObservableCollection<Genre> _genres;
-
-        //public ObservableCollection<Genre> Genres
-        //{
-        //    get { return _genres; }
-        //    set { _genres = value; }
-        //}
+        public ObservableCollection<Genre> Genres
+        {
+            get { return _genres; }
+            set { _genres = value; }
+        }
 
         public static ObservableCollection<Band> GetBands()
         {
@@ -117,9 +109,28 @@ namespace eindopdracht.model
                     Photo = (Byte[])reader[5],
                     Description = (string)reader[6],
                     Twitter = (string)reader[7],
-                    Facebook = (string)reader[8]
+                    Facebook = (string)reader[8],
                 };
+                band.Genres = getGenresByBandId(band);
                 lst.Add(band);
+            }
+            return lst;
+        }
+
+        public static ObservableCollection<Genre> getGenresByBandId(Band band)
+        {
+            ObservableCollection<Genre> lst = new ObservableCollection<Genre>();
+            string sql = "SELECT GenreBand.IdBand, Genres.Name, GenreBand.IdGenre FROM GenreBand INNER JOIN Genres ON GenreBand.IdGenre=Genres.ID WHERE GenreBand.IdBand = @idBand";
+            DbParameter idBand = DataBase.addparameter("@idBand",band.ID);
+            DbDataReader reader = DataBase.GetData(sql,idBand);
+            while (reader.Read())
+            {
+                Genre genre = new Genre() 
+                {
+                    ID = (int)reader["IdGenre"],
+                    Name = (string)reader["Name"]
+                };
+                lst.Add(genre);
             }
             return lst;
         }
@@ -153,6 +164,44 @@ namespace eindopdracht.model
             DbParameter par7 = DataBase.addparameter("@Twitter", band.Twitter);
             DbParameter par8 = DataBase.addparameter("@Facebook", band.Facebook);
             DataBase.modifyData(sql, par, par1, par2, par3, par4, par5, par6, par7, par8);
+        }
+
+        public static void addGenreToBand(Band band,Genre genre)
+        {
+            String sql = "INSERT INTO GenreBand (IdBand,IdGenre) VALUES (@bandId,@genreId)";
+            DbParameter par1 = DataBase.addparameter("@bandId",band.ID);
+            DbParameter par2 = DataBase.addparameter("@genreId",genre.ID);
+            DataBase.modifyData(sql,par1,par2);
+        }
+
+        public static Band GetBandByid(Band band)
+        {
+            string sql = "SELECT * FROM Bands WHERE ID=@id";
+            DbParameter par1 = DataBase.addparameter("@id",band.ID);
+            DbDataReader reader = DataBase.GetData(sql,par1);
+            Band bnd = new Band();
+            while (reader.Read())
+            {
+                bnd.ID = (int)reader["ID"];
+                bnd.Name = (string)reader["Name"];
+                bnd.Phone = (string)reader["Phone"];
+                bnd.Fax = (string)reader["Fax"];
+                bnd.Email = (string)reader["Email"];
+                bnd.Photo = (Byte[])reader["Photo"];
+                bnd.Description = (string)reader["Description"];
+                bnd.Twitter = (string)reader["Twitter"];
+                bnd.Facebook = (string)reader["Facebook"];
+                bnd.Genres = getGenresByBandId(band);
+            }
+            return bnd;
+        }
+
+        public static void DeleteGenreFromBand(Band band,Genre genre)
+        {
+            string sql = "DELETE FROM GenreBand WHERE IdBand=@bandID AND IdGenre=@genreID";
+            DbParameter idBand = DataBase.addparameter("@bandID",band.ID);
+            DbParameter idGenre = DataBase.addparameter("@genreID",genre.ID);
+            DataBase.modifyData(sql,idBand,idGenre);
         }
     }
 }

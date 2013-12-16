@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Data.Common;
 using System.Windows;
+using eindopdracht.viewmodel;
 
 namespace eindopdracht.model
 {
@@ -99,9 +100,9 @@ namespace eindopdracht.model
             {
                 //vermindering wegschijven in database.
                 string sql2 = "UPDATE TicketTypes SET Aantal=@aantal WHERE ID=@id";
-                DbParameter aantalPar = DataBase.addparameter("@aantal",aantal);
-                DbParameter idPar = DataBase.addparameter("@id",ticket.TicketType.Id);
-                DataBase.modifyData(sql2,aantalPar,idPar);
+                DbParameter aantalPar = DataBase.addparameter("@aantal", aantal);
+                DbParameter idPar = DataBase.addparameter("@id", ticket.TicketType.Id);
+                DataBase.modifyData(sql2, aantalPar, idPar);
 
                 string sql = "INSERT INTO Tickets(Holder,HolderEmail,Type,Aantal,Reserved) VALUES(@holder,@email,@type,@aantal,@reserved)";
                 DbParameter par1 = DataBase.addparameter("@holder", ticket.TicketHolder);
@@ -110,6 +111,12 @@ namespace eindopdracht.model
                 DbParameter par4 = DataBase.addparameter("@aantal", ticket.Amount);
                 DbParameter par5 = DataBase.addparameter("@reserved", "Yes");
                 DataBase.modifyData(sql, par1, par2, par3, par4, par5);
+
+                MessageBox.Show("Ticket gereseveerd voor "+ticket.TicketHolder);
+            }
+            else
+            {
+                MessageBox.Show("Er kunnen geen tickets meer gereserveerd worden voor het type " + ticket.TicketType.Name);
             }
         }
 

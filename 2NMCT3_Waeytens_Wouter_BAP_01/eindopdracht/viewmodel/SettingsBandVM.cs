@@ -100,6 +100,16 @@ namespace eindopdracht.viewmodel
             get { return _dates; }
             set { _dates = value; OnPropertyChanged("Dates"); }
         }
+
+        private Genre _selectedAddGenreToBand;
+
+        public Genre SelectedAddGenreToBand
+        {
+            get { return _selectedAddGenreToBand; }
+            set { _selectedAddGenreToBand = value; OnPropertyChanged("SelectedAddGenreToBand"); }
+        }
+        
+
         #endregion
 
         #region ctor
@@ -290,6 +300,17 @@ namespace eindopdracht.viewmodel
             Festival.UpdateDate(Dates);
             Dates = Festival.GetDates();
             MessageBox.Show("Datum "+Dates.StartDate.ToString("dd/MM/yyyy")+" - "+Dates.EndDate.ToString("dd/MM/yyyy")+" is succesvol opgeslagen");
+        }
+
+
+        public ICommand AddGenreToBand
+        {
+            get { return new RelayCommand(AddGenreBandHandler); }
+        }
+
+        private void AddGenreBandHandler()
+        {
+            Band.addGenreToBand(SelectedBand,SelectedAddGenreToBand);
         }
 
         //social media

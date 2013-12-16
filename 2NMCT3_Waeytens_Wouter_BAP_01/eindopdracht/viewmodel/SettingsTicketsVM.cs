@@ -42,22 +42,6 @@ namespace eindopdracht.viewmodel
             get { return _SaveTicketType; }
             set { _SaveTicketType = value; OnPropertyChanged("SaveTicketType"); }
         }
-
-        private Ticket _reserveTicket;
-
-        public Ticket ReserveTicket
-        {
-            get { return _reserveTicket; }
-            set { _reserveTicket = value; OnPropertyChanged("ReserveTicket"); }
-        }
-
-        private ObservableCollection<int> _lstAantalTickets;
-
-        public ObservableCollection<int> lstAantalTickets
-        {
-            get { return _lstAantalTickets; }
-            set { _lstAantalTickets = value; OnPropertyChanged("lstAantalTickets"); }
-        }
         
         private String _textEditSaveType;
 
@@ -83,22 +67,11 @@ namespace eindopdracht.viewmodel
             _TicketList = Ticket.GetTickets();
             _ticketTypeList = TicketType.GetTypesTickets();
             SaveTicketType = new TicketType();
-            ReserveTicket = new Ticket();
+
             TextEditSaveType = "Save";
             visibleButton = "Hidden";
-            lstAantalTickets = aantalTicketsFill();
         }
         #endregion
-
-        private ObservableCollection<int> aantalTicketsFill()
-        {
-            ObservableCollection<int> lst = new ObservableCollection<int>();
-            for (int i = 1; i < 11; i++)
-            {
-                lst.Add(i);
-            }
-            return lst;
-        }
 
         #region commands
         public ICommand addTicketTypeCommand
@@ -171,27 +144,6 @@ namespace eindopdracht.viewmodel
 
             TicketTypeList = TicketType.GetTypesTickets();
         }
-
-        public ICommand ReserveTicketCommand
-        {
-            get { return new RelayCommand(reserveHandler); }
-        }
-
-        private void reserveHandler()
-        {
-            Ticket.ReserveTicket(ReserveTicket);
-            if (ReserveTicket.TicketType.AvailableTickets < ReserveTicket.Amount)
-            {
-                MessageBox.Show("Er kunnen geen tickets meer gereserveerd worden voor het type " + ReserveTicket.TicketType.Name);
-            }
-            else
-            {
-                MessageBox.Show("Ticket Reserved for " + ReserveTicket.TicketHolder);
-                ReserveTicket = new Ticket();
-                TicketTypeList = TicketType.GetTypesTickets();
-            }
-        }
-
         #endregion
     }
 }
