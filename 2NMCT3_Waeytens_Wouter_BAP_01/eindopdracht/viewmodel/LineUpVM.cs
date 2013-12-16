@@ -35,25 +35,25 @@ namespace eindopdracht.viewmodel
             set { _LstPodiums = value; OnPropertyChanged("LstPodiums"); }
         }
 
+        private ObservableCollection<DateTime> _listDays;
+
+        public ObservableCollection<DateTime> ListDays
+        {
+            get { return _listDays; }
+            set { _listDays = value; OnPropertyChanged("ListDays"); }
+        }
+        
+
         #endregion
 
         #region properties
-        private Band _vorigeBand;
+        private Festival _fest;
 
-        public Band VorigeBand
+        public Festival Fest
         {
-            get { return _vorigeBand; }
-            set { _vorigeBand = value;}
-        }
-
-        private Band _selectedBand;
-
-        public Band SelectedBand
-        {
-            get { return _selectedBand; }
-            set { _selectedBand = value; }
-        }
-        
+            get { return _fest; }
+            set { _fest = value; }
+        }      
         #endregion
 
         #region ctor
@@ -61,7 +61,26 @@ namespace eindopdracht.viewmodel
         {
             LstBands = Band.GetBands();
             LstPodiums = Stage.GetStages();
+            ListDays = getListDays();
         }
+
+        #endregion
+        private ObservableCollection<DateTime> getListDays()
+        {
+            Fest = Festival.GetDates();
+            ObservableCollection<DateTime> lst = new ObservableCollection<DateTime>();
+            lst.Add(Fest.StartDate);
+            TimeSpan lenght = Fest.EndDate - Fest.StartDate;
+            for (int i = 1; i < lenght.Days; i++)
+            {
+                lst.Add(Fest.StartDate.AddDays(i));
+            }
+            lst.Add(Fest.EndDate);
+            return lst;
+        }
+        #region methods
+
+
         #endregion
 
         #region commands
@@ -72,7 +91,7 @@ namespace eindopdracht.viewmodel
 
         private void LineUpBandHandler(Band obj)
         {
-            throw new NotImplementedException();
+
         }
         #endregion
     }

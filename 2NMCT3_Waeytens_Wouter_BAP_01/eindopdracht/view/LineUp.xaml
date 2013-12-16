@@ -45,10 +45,10 @@
         </ScrollViewer>
         <!--poduim selector-->
         <TextBlock Margin="7,7,199,7" Grid.Column="1" FontSize="18" Grid.ColumnSpan="2">Stage:</TextBlock>
-        <ComboBox Grid.Row="0" Margin="7,7,16,7" Grid.Column="2" ItemsSource="{Binding LstPodiums}" DisplayMemberPath="Name" SelectedIndex="0"></ComboBox>
+        <ComboBox Grid.Row="0" Margin="7,7,16,7" Grid.Column="2" ItemsSource="{Binding LstPodiums}" DisplayMemberPath="Name"></ComboBox>
         <!--dag selector-->
         <TextBlock Margin="14,7,189,7" Grid.Column="3" FontSize="18" Grid.ColumnSpan="2">Dag:</TextBlock>
-        <ComboBox Grid.Row="0" Margin="5,7,18,7" Grid.Column="4" SelectedIndex="0"></ComboBox>
+        <ComboBox Grid.Row="0" Margin="5,7,18,7" Grid.Column="4" ItemsSource="{Binding ListDays,StringFormat='dd/MM/YYYY'}"></ComboBox>
         <!--timeslot-->
         <!--startTime-->
         <TextBlock Margin="7" Grid.Column="5" FontSize="18">Time:</TextBlock>
