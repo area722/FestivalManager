@@ -24,17 +24,17 @@ namespace eindopdracht.model
             set { _date = value; }
         }
 
-        private String _from;
+        private DateTime _from;
 
-        public String From
+        public DateTime From
         {
             get { return _from; }
             set { _from = value; }
         }
 
-        private String _until;
+        private DateTime _until;
 
-        public String Until
+        public DateTime Until
         {
             get { return _until; }
             set { _until = value; }

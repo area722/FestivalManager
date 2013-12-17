@@ -48,7 +48,7 @@
         <ComboBox Grid.Row="0" Margin="7,7,16,7" Grid.Column="2" ItemsSource="{Binding LstPodiums}" DisplayMemberPath="Name"></ComboBox>
         <!--dag selector-->
         <TextBlock Margin="14,7,189,7" Grid.Column="3" FontSize="18" Grid.ColumnSpan="2">Dag:</TextBlock>
-        <ComboBox Grid.Row="0" Margin="5,7,18,7" Grid.Column="4" ItemsSource="{Binding ListDays}"></ComboBox>
+        <ComboBox Grid.Row="0" Margin="5,7,18,7" Grid.Column="4" ItemsSource="{Binding ListDays}" SelectedIndex="0" SelectedItem="{Binding SelectedDay}"></ComboBox>
         <!--timeslot-->
         <!--startTime-->
         <TextBlock Margin="7" Grid.Column="5" FontSize="18">Time:</TextBlock>
@@ -64,9 +64,9 @@
                     <ColumnDefinition Width="59*"></ColumnDefinition>
                     <ColumnDefinition Width="32*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <ComboBox Grid.Column="0" Margin="7" ItemsSource="{Binding LstHours}"></ComboBox>
+                <ComboBox Grid.Column="0" Margin="7" ItemsSource="{Binding LstHours}" SelectedItem="{Binding StartHour}"></ComboBox>
                 <TextBlock Text="h" Margin="7" FontSize="14" Grid.Column="1"></TextBlock>
-                <ComboBox Grid.Column="2" Margin="7"></ComboBox>
+                <ComboBox Grid.Column="2" Margin="7" ItemsSource="{Binding LstMinutes}" SelectedItem="{Binding StartMinites}"></ComboBox>
                 <TextBlock Text="m" Margin="7" FontSize="14" Grid.Column="3"></TextBlock>
             </Grid>
             <TextBlock Grid.Column="0"  Text="Startime:" FontSize="15" Margin="7"></TextBlock>
@@ -83,9 +83,9 @@
                     <ColumnDefinition Width="59*"></ColumnDefinition>
                     <ColumnDefinition Width="32*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <ComboBox Grid.Column="0" Margin="7"></ComboBox>
+                <ComboBox Grid.Column="0" Margin="7" ItemsSource="{Binding LstHours}" SelectedItem="{Binding EndHours}"></ComboBox>
                 <TextBlock Text="h" Margin="7" FontSize="14" Grid.Column="1"></TextBlock>
-                <ComboBox Grid.Column="2" Margin="7"></ComboBox>
+                <ComboBox Grid.Column="2" Margin="7" ItemsSource="{Binding LstMinutes}" SelectedItem="{Binding EndMinites}"></ComboBox>
                 <TextBlock Text="m" Margin="7" FontSize="14" Grid.Column="3"></TextBlock>
             </Grid>
             <TextBlock Grid.Column="0"  Text="EndTime:" FontSize="15" Margin="7"></TextBlock>
@@ -103,12 +103,12 @@
                     <ColumnDefinition Width="61*"></ColumnDefinition>
                     <ColumnDefinition Width="30*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <ComboBox Grid.Column="0" Margin="7"></ComboBox>
+                <ComboBox Grid.Column="0" Margin="7" ItemsSource="{Binding LstHours}" SelectedItem="{Binding DurationHours}"></ComboBox>
                 <TextBlock Text="h" Margin="7" FontSize="14" Grid.Column="1"></TextBlock>
-                <ComboBox Grid.Column="2" Margin="7"></ComboBox>
+                <ComboBox Grid.Column="2" Margin="7" ItemsSource="{Binding LstMinutes}" SelectedItem="{Binding DurationMinites}"></ComboBox>
                 <TextBlock Text="m" Margin="7" FontSize="14" Grid.Column="3"></TextBlock>
             </Grid>
         </Grid>
-        <Button Style="{StaticResource addButton}" Content="+add" Grid.Row="4" Grid.Column="5" Margin="7,7,7,14"></Button>
+        <Button Style="{StaticResource addButton}" Content="+add" Grid.Row="4" Grid.Column="5" Margin="7,7,7,14" Command="{Binding AddLineUpCommand}" ></Button>
     </Grid>
 </UserControl>
