@@ -297,6 +297,7 @@ namespace eindopdracht.viewmodel
 
         private void saveDateHandler()
         {
+            //als date aangepast word de dagen van de lineup ook wegdoen!!
             Festival.UpdateDate(Dates);
             Dates = Festival.GetDates();
             MessageBox.Show("Datum "+Dates.StartDate.ToString("dd/MM/yyyy")+" - "+Dates.EndDate.ToString("dd/MM/yyyy")+" is succesvol opgeslagen");

@@ -36,6 +36,15 @@ namespace eindopdracht.viewmodel
             set { _LstPodiums = value; OnPropertyChanged("LstPodiums"); }
         }
 
+        private Stage _selectedStage;
+
+        public Stage SelectedStage
+        {
+            get { return _selectedStage; }
+            set { _selectedStage = value; OnPropertyChanged("SelectedStage"); SelectionChangedDayStage(); }
+        }
+        
+
         private ObservableCollection<DateTime> _listDays;
 
         public ObservableCollection<DateTime> ListDays
@@ -49,16 +58,17 @@ namespace eindopdracht.viewmodel
         public DateTime SelectedDay
         {
             get { return _selectedDay; }
-            set { _selectedDay = value; OnPropertyChanged("SelectedDay"); }
+            set { _selectedDay = value; OnPropertyChanged("SelectedDay"); SelectionChangedDayStage(); }
         }
 
-        private ObservableCollection<DateTime> _lstShowTimes;
+        private ObservableCollection<LineUp> _listLineUp;
 
-        public ObservableCollection<DateTime> LstShowTimes
+        public ObservableCollection<LineUp> ListLineUp
         {
-            get { return _lstShowTimes; }
-            set { _lstShowTimes = value; OnPropertyChanged("LstShowTimes"); }
+            get { return _listLineUp; }
+            set { _listLineUp = value; OnPropertyChanged("ListLineUp"); }
         }
+        
 
         private ObservableCollection<int> _lstHours;
 
@@ -154,6 +164,7 @@ namespace eindopdracht.viewmodel
             LstHours = new ObservableCollection<int>();
             LstMinutes = new ObservableCollection<int>();
             fillShowTimes();
+            ListLineUp = new ObservableCollection<LineUp>();
         }
 
         #endregion
@@ -202,15 +213,6 @@ namespace eindopdracht.viewmodel
         private Boolean boolken = true;
         private void SelectionChanged(int time,string what)
         {
-            Console.WriteLine(what+": "+time);
-            //if (what == "DurationHours" || what == "DurationMinites")
-            //{ 
-            //    //calculate endtime
-            //    DateTime startTime = new DateTime(2013,1,1,StartHour,StartMinites,0);
-            //    DateTime endTime = startTime.AddHours(DurationHours).AddMinutes(DurationMinites);
-            //    EndHours = endTime.Hour;
-            //    EndMinites = endTime.Minute;
-            //}
             if (what == "EndHours" || what == "EndMinites" || what == "StartHour" || what == "StartMinites")
             {
                 if (EndHours < StartHour)
@@ -241,6 +243,19 @@ namespace eindopdracht.viewmodel
             }
         }
 
+        private void SelectionChangedDayStage()
+        {
+            if (SelectedStage != null && SelectedDay != new DateTime(0001, 1, 1, 0, 0, 0))
+            {
+                LineUp lu = new LineUp()
+                {
+                    Date = SelectedDay,
+                    Stage = SelectedStage
+                };
+                ListLineUp = LineUp.getLineupsByStageAndDay(lu);
+            }
+        }
+
         #endregion
 
         #region commands
@@ -261,12 +276,22 @@ namespace eindopdracht.viewmodel
 
         private void AddLineUpHandler()
         {
-            LineUp lineup = new LineUp() 
+            if (SelectedDay == new DateTime(0001,1,1,0,0,0) || SelectedStage == null)
             {
-                Date = SelectedDay,
-                From = new DateTime(SelectedDay.Year,SelectedDay.Month,SelectedDay.Day,StartHour,StartMinites,0),
-                Until = new DateTime(SelectedDay.Year,SelectedDay.Month,SelectedDay.Day,EndHours,EndMinites,0) 
-            };
+                MessageBox.Show("Selecteer een stage en dag");
+            }
+            else 
+            {
+                LineUp lineup = new LineUp()
+                {
+                    Date = SelectedDay,
+                    From = new DateTime(SelectedDay.Year, SelectedDay.Month, SelectedDay.Day, StartHour, StartMinites, 0),
+                    Until = new DateTime(SelectedDay.Year, SelectedDay.Month, SelectedDay.Day, EndHours, EndMinites, 0),
+                    Stage = SelectedStage
+                };
+                LineUp.InsertLinup(lineup);
+                ListLineUp = LineUp.getLineupsByStageAndDay(lineup);
+            }
         }
         #endregion
     }
