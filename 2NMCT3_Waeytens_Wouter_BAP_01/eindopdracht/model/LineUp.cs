@@ -56,6 +56,7 @@ namespace eindopdracht.model
             set { _band = value; }
         }
 
+        
 
     }
 }

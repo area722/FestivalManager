@@ -42,8 +42,15 @@ namespace eindopdracht.viewmodel
             get { return _listDays; }
             set { _listDays = value; OnPropertyChanged("ListDays"); }
         }
-        
 
+        private ObservableCollection<int> _lstHours;
+
+        public ObservableCollection<int> LstHours
+        {
+            get { return _lstHours; }
+            set { _lstHours = value; OnPropertyChanged("LstHours"); }
+        }
+        
         #endregion
 
         #region properties
@@ -62,6 +69,7 @@ namespace eindopdracht.viewmodel
             LstBands = Band.GetBands();
             LstPodiums = Stage.GetStages();
             ListDays = getListDays();
+            LstHours = FillHours();
         }
 
         #endregion
@@ -76,6 +84,16 @@ namespace eindopdracht.viewmodel
                 lst.Add(Fest.StartDate.AddDays(i));
             }
             lst.Add(Fest.EndDate);
+            return lst;
+        }
+
+        private ObservableCollection<int> FillHours()
+        {
+            ObservableCollection<int> lst = new ObservableCollection<int>();
+            for (int i = 1; i <= 24; i++)
+            {
+                lst.Add(i);
+            }
             return lst;
         }
         #region methods
