@@ -280,7 +280,14 @@ namespace eindopdracht.viewmodel
             {
                 MessageBox.Show("Selecteer een stage en dag");
             }
-            else 
+            DateTime start = new DateTime(0001,1,1,StartHour,StartMinites,0);
+            DateTime end = new DateTime(0001,1,1,EndHours,EndMinites,0);
+            TimeSpan dur = end - start;
+            if (dur.TotalMinutes <= 0)
+            {
+                MessageBox.Show("Start en einduur mogen niet hetzelfde zijn");
+            }
+            else
             {
                 LineUp lineup = new LineUp()
                 {

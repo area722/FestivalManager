@@ -110,5 +110,26 @@
             </Grid>
         </Grid>
         <Button Style="{StaticResource addButton}" Content="+add" Grid.Row="4" Grid.Column="5" Margin="7,7,7,14" Command="{Binding AddLineUpCommand}" ></Button>
+        <ScrollViewer Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4" Margin="7" Grid.RowSpan="5">
+            <StackPanel>
+                <ItemsControl ItemsSource="{Binding ListLineUp}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="7" Background="Gray" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <!--<Button Opacity="0" Command="{Binding DataContext.LineUpBandCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}" Grid.RowSpan="2"></Button>
+                                <TextBlock Text="{Binding Name}" Margin="7"></TextBlock>
+                                <TextBlock Text="{Binding Phone}" Grid.Row="1" Margin="7"></TextBlock>-->
+                                <TextBlock Text="{Binding From}" Grid.Row="0"></TextBlock>
+                                <TextBlock Text="{Binding Until}" Grid.Row="1"></TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>
