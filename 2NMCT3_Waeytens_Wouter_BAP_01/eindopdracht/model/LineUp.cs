@@ -148,6 +148,8 @@ namespace eindopdracht.model
             }
         }
 
+
+
         public static ObservableCollection<LineUp> getLineupsByStageAndDay(LineUp lineUp)
         {
             String sql = "SELECT LineUp.ID,LineUp.Date,LineUp.EndTime,LineUp.StartTime,Stages.Name,Stages.ID AS StageID FROM LineUp INNER JOIN Stages ON LineUp.Stage=Stages.ID WHERE Stage = @stageId AND Date = @date ORDER BY LineUp.StartTime ASC";
@@ -171,6 +173,7 @@ namespace eindopdracht.model
                 };
                 lst.Add(lineup);
             }
+            lst.OrderBy(p=>p.Until);
             return lst;
         }
 
