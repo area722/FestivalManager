@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using eindopdracht.model;
 
 namespace eindopdracht.viewmodel
 {
@@ -18,6 +19,9 @@ namespace eindopdracht.viewmodel
             Pages.Add(new SettingsVM());
 
             CurrentPage = Pages[0];
+
+            //festname
+            FestName = Festival.GetFestName();
         }
 
         private IPage _currentpage;
@@ -46,6 +50,16 @@ namespace eindopdracht.viewmodel
         private void ChangePage(IPage page)
         {
             CurrentPage = page;
-        }           
+        }
+
+        //festname in title van window
+        private string _festName;
+
+        public string FestName
+        {
+            get { return _festName; }
+            set { _festName = value; OnPropertyChanged("FestName"); }
+        }
+        
     }
 }

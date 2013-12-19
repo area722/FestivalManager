@@ -108,8 +108,14 @@ namespace eindopdracht.viewmodel
             get { return _selectedAddGenreToBand; }
             set { _selectedAddGenreToBand = value; OnPropertyChanged("SelectedAddGenreToBand"); }
         }
-        
 
+        private String _festName;
+
+        public String FestName
+        {
+            get { return _festName; }
+            set { _festName = value; OnPropertyChanged("FestName"); }
+        }
         #endregion
 
         #region ctor
@@ -135,6 +141,9 @@ namespace eindopdracht.viewmodel
                 Dates.StartDate = DateTime.Today;
                 Dates.EndDate = DateTime.Today.AddDays(1);
             }
+
+            //festname
+            FestName = Festival.GetFestName();
         }
         #endregion
 
@@ -325,6 +334,17 @@ namespace eindopdracht.viewmodel
             Band.DeleteGenreFromBand(SelectedBand,genre);
             SelectedBand = Band.GetBandByid(SelectedBand);
             BandsList = Band.GetBands();          
+        }
+
+
+        public ICommand SaveFestivalName
+        {
+            get { return new RelayCommand(FestNameHandler); }
+        }
+
+        private void FestNameHandler()
+        {
+            Festival.SaveFestName(FestName);
         }
 
         //social media
