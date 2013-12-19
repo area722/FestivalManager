@@ -120,6 +120,49 @@ namespace eindopdracht.model
             }
         }
 
+        public static ObservableCollection<Ticket> SearchTicket(String term)
+        { 
+            ObservableCollection<Ticket> lst = new ObservableCollection<Ticket>();
+            string sql = "SELECT * FROM Tickets WHERE HolderEmail LIKE @term OR Holder LIKE @term";
+            DbParameter par1 = DataBase.addparameter("@term","%"+term+"%");
+            DbDataReader reader = DataBase.GetData(sql,par1);
+            while (reader.Read())
+            {
+                Ticket ticket = new Ticket() 
+                {
+                    Id = (int)reader["ID"],
+                    TicketHolder = (string)reader["Holder"],
+                    TicketHolderEmail = (string)reader["HolderEmail"],
+                    TicketType = TicketType.GetById((int)reader["Type"]),
+                    Amount = (int)reader["Aantal"],
+                    Reserved = (string)reader["Reserved"]
+                };
+                lst.Add(ticket);
+            }
+            return lst;
+        }
+
+        public static ObservableCollection<Ticket> SearchType(TicketType type)
+        {
+            ObservableCollection<Ticket> lst = new ObservableCollection<Ticket>();
+            string sql = "SELECT * FROM Tickets WHERE Type = @type";
+            DbParameter par1 = DataBase.addparameter("@type",type.Id);
+            DbDataReader reader = DataBase.GetData(sql,par1);
+            while(reader.Read())
+            {
+                Ticket ticket = new Ticket() 
+                {
+                    Id = (int)reader["ID"],
+                    TicketHolder = (string)reader["Holder"],
+                    TicketHolderEmail = (string)reader["HolderEmail"],
+                    TicketType = TicketType.GetById((int)reader["Type"]),
+                    Amount = (int)reader["Aantal"],
+                    Reserved = (string)reader["Reserved"]
+                };
+                lst.Add(ticket);
+            }
+            return lst;
+        }
 
     }
 }

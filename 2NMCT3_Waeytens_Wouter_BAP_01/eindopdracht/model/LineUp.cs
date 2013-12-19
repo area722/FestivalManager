@@ -152,14 +152,14 @@ namespace eindopdracht.model
 
         public static ObservableCollection<LineUp> getLineupsByStageAndDay(LineUp lineUp)
         {
-            String sql = "SELECT LineUp.ID,LineUp.Date,LineUp.EndTime,LineUp.StartTime,Stages.Name,Stages.ID AS StageID FROM LineUp INNER JOIN Stages ON LineUp.Stage=Stages.ID WHERE Stage = @stageId AND Date = @date ORDER BY LineUp.StartTime ASC";
+            String sql = "SELECT LineUp.ID,LineUp.Date,LineUp.EndTime,LineUp.StartTime,Stages.Name,Stages.ID AS StageID FROM LineUp INNER JOIN Stages ON LineUp.Stage=Stages.ID WHERE Stage = @stageId AND Date = @date ORDER BY CAST(LineUp.StartTime AS datetime) ASC";
             DbParameter par1 = DataBase.addparameter("@stageId",lineUp.Stage.ID);
             DbParameter par2 = DataBase.addparameter("@date",lineUp.Date);
             DbDataReader reader = DataBase.GetData(sql,par1,par2);
             ObservableCollection<LineUp> lst = new ObservableCollection<LineUp>();
             while (reader.Read())
             {
-                LineUp lineup = new LineUp()
+                LineUp lineup = new LineUp() 
                 {
                     ID = (int)reader["ID"],
                     Date = Convert.ToDateTime(reader["Date"]),

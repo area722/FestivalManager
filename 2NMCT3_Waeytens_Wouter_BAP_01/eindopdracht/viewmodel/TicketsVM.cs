@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using eindopdracht.model;
 using System.Windows.Input;
 using System.Windows;
+using GalaSoft.MvvmLight.Command;
 
 namespace eindopdracht.viewmodel
 {
@@ -65,7 +66,15 @@ namespace eindopdracht.viewmodel
         {
             get { return _lstAantalTickets; }
             set { _lstAantalTickets = value; OnPropertyChanged("lstAantalTickets"); }
-        }      
+        }
+
+        private TicketType _selectedType;
+
+        public TicketType SelectedType
+        {
+            get { return _selectedType; }
+            set { _selectedType = value; SelectedTypeChange(); OnPropertyChanged("SelectedType"); }
+        }   
         #endregion
 
         #region ctor
@@ -95,7 +104,6 @@ namespace eindopdracht.viewmodel
 
         private void selectedTicketChange()
         {
-            Console.WriteLine(SelectedTicket.TicketHolder);
             if (SelectedTicket != null)
             {
                 //display print button
@@ -105,6 +113,11 @@ namespace eindopdracht.viewmodel
             {
                 viewPrintButton = "Hidden";
             }
+        }
+
+        private void SelectedTypeChange()
+        {
+            TicketList = Ticket.SearchType(SelectedType);
         }
         #endregion
 
@@ -153,6 +166,26 @@ namespace eindopdracht.viewmodel
         {
             TicketList = Ticket.GetTickets();
         }
+
+
+        public ICommand ZoekCommand
+        {
+            get { return new RelayCommand<string>(zoekHandler); }
+        }
+
+        private void zoekHandler(string term)
+        {
+            if (term != string.Empty && term != "Search")
+            {
+                Console.WriteLine("term: " + term);
+                TicketList = Ticket.SearchTicket(term);
+            }
+            if (term == string.Empty)
+            {
+                TicketList = Ticket.GetTickets();
+            }
+        }
+
 
         #endregion
     }

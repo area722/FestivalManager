@@ -128,7 +128,7 @@ namespace eindopdracht.model
             }
             return type;
         }
-
+        
         public override string ToString()
         {
             return Name;

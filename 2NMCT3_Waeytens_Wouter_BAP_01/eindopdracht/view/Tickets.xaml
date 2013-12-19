@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF45"
              mc:Ignorable="d" 
              d:DesignHeight="708" d:DesignWidth="1024">
     <Grid>
@@ -22,9 +24,15 @@
                 <RowDefinition Height="167*"/>
             </Grid.RowDefinitions>
             <DataGrid Grid.ColumnSpan="3" Margin="7,10,7,7" Grid.Row="2" ItemsSource="{Binding TicketList}" Grid.RowSpan="2" SelectedItem="{Binding SelectedTicket}" SelectionUnit="FullRow" IsReadOnly="True"/>
-            <TextBox x:Name="SearchField" HorizontalAlignment="Left" Height="23" Margin="10,7,0,0" Grid.Row="0" TextWrapping="Wrap" Text="Search" VerticalAlignment="Top" Width="371" Grid.ColumnSpan="2" GotFocus="FocusSearch"/>
+            <TextBox x:Name="SearchField" HorizontalAlignment="Left" Height="23" Margin="10,7,0,0" Grid.Row="0" TextWrapping="Wrap" Text="Search" VerticalAlignment="Top" Width="371" Grid.ColumnSpan="2" GotFocus="FocusSearch">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="TextChanged">
+                        <cmd:EventToCommand Command="{Binding ZoekCommand}" CommandParameter="{Binding Text,ElementName=SearchField}"></cmd:EventToCommand>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="138,10,0,0" Grid.Row="0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="26"><Run Language="nl-be" Text="type:"/></TextBlock>
-            <ComboBox Grid.ColumnSpan="2" Grid.Column="1" HorizontalAlignment="Left" Margin="170,7,0,0" Grid.Row="0" VerticalAlignment="Top" Width="157" ItemsSource="{Binding TicketTypeList}" DisplayMemberPath="Name" Height="22"/>
+            <ComboBox Grid.ColumnSpan="2" Grid.Column="1" HorizontalAlignment="Left" Margin="170,7,0,0" Grid.Row="0" VerticalAlignment="Top" Width="157" ItemsSource="{Binding TicketTypeList}" DisplayMemberPath="Name" Height="22" SelectedItem="{Binding SelectedType}"/>
             <ScrollViewer Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" Margin="7,30,7,7">
                 <StackPanel>
                     <ItemsControl ItemsSource="{Binding TicketTypeList}">
