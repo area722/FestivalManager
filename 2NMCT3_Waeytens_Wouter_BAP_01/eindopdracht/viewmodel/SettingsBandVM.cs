@@ -307,9 +307,21 @@ namespace eindopdracht.viewmodel
         private void saveDateHandler()
         {
             //als date aangepast word de dagen van de lineup ook wegdoen!!
-            Festival.UpdateDate(Dates);
-            Dates = Festival.GetDates();
-            MessageBox.Show("Datum "+Dates.StartDate.ToString("dd/MM/yyyy")+" - "+Dates.EndDate.ToString("dd/MM/yyyy")+" is succesvol opgeslagen");
+            string sMessageBoxText = "Weet je zeker dat je datums wilt aanpassen alle lineup dagen tussen deze datums worden verwijderd.";
+            string sCaption = "Bent u zeker?";
+
+            MessageBoxButton btnMessageBox = MessageBoxButton.YesNo;
+            MessageBoxImage icnMessageBox = MessageBoxImage.Question;
+
+            MessageBoxResult rsltMessageBox = MessageBox.Show(sMessageBoxText, sCaption, btnMessageBox, icnMessageBox);
+            if (rsltMessageBox == MessageBoxResult.Yes)
+            {
+                //remove lineups
+                LineUp.removeLineUpsDates(Dates);
+                Festival.UpdateDate(Dates);
+                Dates = Festival.GetDates();
+                MessageBox.Show("Datum " + Dates.StartDate.ToString("dd/MM/yyyy") + " - " + Dates.EndDate.ToString("dd/MM/yyyy") + " is succesvol opgeslagen");
+            }
         }
 
 

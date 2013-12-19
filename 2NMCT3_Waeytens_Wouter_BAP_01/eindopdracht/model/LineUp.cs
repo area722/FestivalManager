@@ -177,5 +177,12 @@ namespace eindopdracht.model
             return lst;
         }
 
+        public static void removeLineUpsDates(Festival fest)
+        {
+            string sql = "DELETE FROM LineUp WHERE Date NOT BETWEEN @startDate AND @endDate";
+            DbParameter startDate = DataBase.addparameter("@startDate",fest.StartDate);
+            DbParameter endDate = DataBase.addparameter("@endDate",fest.EndDate);
+            DataBase.modifyData(sql,startDate,endDate);
+        }
     }
 }

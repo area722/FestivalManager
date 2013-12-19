@@ -69,7 +69,6 @@ namespace eindopdracht.viewmodel
             set { _listLineUp = value; OnPropertyChanged("ListLineUp"); }
         }
         
-
         private ObservableCollection<int> _lstHours;
 
         public ObservableCollection<int> LstHours
@@ -321,6 +320,19 @@ namespace eindopdracht.viewmodel
         {
             Console.WriteLine(lu.Stage.Name);
         }
+
+
+        public ICommand RefreshStagesAndDays
+        {
+            get { return new RelayCommand(refreshHandler); }
+        }
+
+        private void refreshHandler()
+        {
+            ListDays = getListDays();
+            LstPodiums = Stage.GetStages();
+        }
+
 
         #endregion
     }
