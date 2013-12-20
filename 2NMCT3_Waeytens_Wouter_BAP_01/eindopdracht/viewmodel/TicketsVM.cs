@@ -11,6 +11,7 @@ using GalaSoft.MvvmLight.Command;
 using System.IO;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
+using System.Windows.Forms;
 
 namespace eindopdracht.viewmodel
 {
@@ -133,34 +134,13 @@ namespace eindopdracht.viewmodel
 
         private void printHandler()
         {
-            //Showfolderdialog met map voor op te slaan!!!!
-
-            string festname = Festival.GetFestName();
-
-            //code for generating word doc
-            String filename = SelectedTicket.TicketHolder+"_"+SelectedTicket.TicketType.Name+".docx";
-            File.Copy("template.docx",filename,true);
-            WordprocessingDocument newdoc = WordprocessingDocument.Open(filename, true);
-            IDictionary<String, BookmarkStart> bookmarks = new Dictionary<String, BookmarkStart>();
-            foreach (BookmarkStart bms in newdoc.MainDocumentPart.RootElement.Descendants<BookmarkStart>())
-            {
-                bookmarks[bms.Name] = bms;
+            FolderBrowserDialog fd = new FolderBrowserDialog();
+            DialogResult result = fd.ShowDialog();
+            if (result == DialogResult.OK)
+            { 
+                Ticket.PrintTicket(SelectedTicket,fd.SelectedPath+"\\");
+                System.Windows.MessageBox.Show("Ticket opgeslagen voor "+SelectedTicket.TicketHolder);
             }
-            bookmarks["Holder"].Parent.InsertAfter<Run>(new Run(new Text(SelectedTicket.TicketHolder)), bookmarks["Holder"]);
-            bookmarks["FestName"].Parent.InsertAfter<Run>(new Run(new Text(festname)), bookmarks["FestName"]);
-            bookmarks["TicketNumber"].Parent.InsertAfter<Run>(new Run(new Text(Convert.ToString(SelectedTicket.Id))), bookmarks["TicketNumber"]);
-            bookmarks["TicketTypePrice"].Parent.InsertAfter<Run>(new Run(new Text(Convert.ToString(SelectedTicket.TicketType.Price))), bookmarks["TicketTypePrice"]);
-            bookmarks["TicketType"].Parent.InsertAfter<Run>(new Run(new Text(SelectedTicket.TicketType.Name)), bookmarks["TicketType"]);
-            //barcode
-            Run run = new Run(new Text(Convert.ToString(DateTime.UtcNow.Ticks)));
-            RunProperties prop = new RunProperties();
-            RunFonts font = new RunFonts() { Ascii = "Free 3 of 9 Extended", HighAnsi = "Free 3 of 9 Extended" };
-            FontSize size = new FontSize() { Val = "96" };
-            prop.Append(font);
-            prop.Append(size);
-            run.PrependChild<RunProperties>(prop);
-            bookmarks["BarCode"].Parent.InsertAfter<Run>(run, bookmarks["BarCode"]);
-            newdoc.Close();
         }
 
         public ICommand ReserveTicketCommand
