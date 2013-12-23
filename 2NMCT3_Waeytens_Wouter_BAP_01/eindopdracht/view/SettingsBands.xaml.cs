@@ -40,5 +40,13 @@ namespace eindopdracht.view
                 NewGenreTxt.Text = "";
             }
         }
+
+        private void Focus(object sender, RoutedEventArgs e)
+        {
+            if (SearchBand.Text == "zoek een band")
+            {
+                SearchBand.Text = "";
+            }
+        }
     }
 }

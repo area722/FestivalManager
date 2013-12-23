@@ -127,10 +127,13 @@
         </Grid>
 
         <StackPanel Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Margin="0,0,0,10">
-            <TextBox Height="23" Margin="5" TextWrapping="Wrap" Text="zoek een band" />
-            <ComboBox Height="23" Margin="5" SelectedIndex="0">
-                <ComboBoxItem>Search by type</ComboBoxItem>
-            </ComboBox>
+            <TextBox x:Name="SearchBand" Height="23" Margin="5" TextWrapping="Wrap" Text="zoek een band" GotFocus="Focus">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="TextChanged">
+                        <cmd:EventToCommand Command="{Binding ZoekCommand}" CommandParameter="{Binding Text,ElementName=SearchBand}"></cmd:EventToCommand>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
             <ScrollViewer Margin="5" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                 <ListBox ItemsSource="{Binding BandsList}" SelectedItem="{Binding SelectedBand}" DisplayMemberPath="Name"></ListBox>
             </ScrollViewer>

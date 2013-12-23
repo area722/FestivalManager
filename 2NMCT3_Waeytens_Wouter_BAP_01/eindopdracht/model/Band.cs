@@ -216,5 +216,29 @@ namespace eindopdracht.model
             DbParameter par2 = DataBase.addparameter("@bandID",band.ID);
             DataBase.modifyData(sql1,par2);
         }
+
+        public static ObservableCollection<Band> SearchBand(string term)
+        {
+            ObservableCollection<Band> lst = new ObservableCollection<Band>();
+            string sql = "SELECT * FROM Bands WHERE Name LIKE @term";
+            DbParameter termPar = DataBase.addparameter("@term","%"+term+"%");
+            DbDataReader reader = DataBase.GetData(sql,termPar);
+            while (reader.Read())
+            {
+                Band bnd = new Band();
+                bnd.ID = (int)reader["ID"];
+                bnd.Name = (string)reader["Name"];
+                bnd.Phone = (string)reader["Phone"];
+                bnd.Fax = (string)reader["Fax"];
+                bnd.Email = (string)reader["Email"];
+                bnd.Photo = (Byte[])reader["Photo"];
+                bnd.Description = (string)reader["Description"];
+                bnd.Twitter = (string)reader["Twitter"];
+                bnd.Facebook = (string)reader["Facebook"];
+                bnd.Genres = getGenresByBandId(bnd);
+                lst.Add(bnd);
+            }
+            return lst;
+        }
     }
 }

@@ -148,6 +148,8 @@ namespace eindopdracht.viewmodel
         #endregion
 
         #region Commands
+
+        #region stages
         //stages
         public ICommand AddStageCommand
         {
@@ -174,6 +176,19 @@ namespace eindopdracht.viewmodel
             Stage.EditStage(stage);
         }
 
+        public ICommand DeleteStage
+        {
+            get { return new RelayCommand<Stage>(deleteStageHandler); }
+        }
+
+        private void deleteStageHandler(Stage stage)
+        {
+            Stage.DeleteStage(stage);
+            ListStages = Stage.GetStages();
+        }
+        #endregion
+
+        #region genres
         //genres
         public ICommand AddGenreCommand
         {
@@ -199,7 +214,9 @@ namespace eindopdracht.viewmodel
         {
             Genre.EditGenre(genre);
         }
+        #endregion
 
+        #region bands
         //Bands
         public ICommand NewBandCommand
         {
@@ -273,6 +290,27 @@ namespace eindopdracht.viewmodel
             }
         }
 
+        public ICommand DeletBandCommand
+        {
+            get { return new RelayCommand(DeleteBandHandler); }
+        }
+
+        private void DeleteBandHandler()
+        {
+            string sMessageBoxText = "Weet je zeker dat je " + SelectedBand.Name + " wil verwijderen? Alle lineups worden met deze band worden ook verwijderd.";
+            string sCaption = "Bent u zeker?";
+
+            MessageBoxButton btnMessageBox = MessageBoxButton.YesNo;
+            MessageBoxImage icnMessageBox = MessageBoxImage.Question;
+
+            MessageBoxResult rsltMessageBox = MessageBox.Show(sMessageBoxText, sCaption, btnMessageBox, icnMessageBox);
+            if (rsltMessageBox == MessageBoxResult.Yes)
+            {
+                Band.DeletBand(SelectedBand);
+            }
+            BandsList = Band.GetBands();
+        }
+
         public ICommand GetPhotoCommand
         {
             get { return new RelayCommand(getPhoto); }
@@ -298,7 +336,27 @@ namespace eindopdracht.viewmodel
             Photo = SelectedBand.Photo;
         }
 
+        public ICommand ZoekCommand
+        {
+            get { return new RelayCommand<string>(searchBandHandler); }
+        }
 
+        private void searchBandHandler(string term)
+        {
+            if (term == "")
+            {
+                BandsList = Band.GetBands();
+            }
+            else
+            {
+                BandsList = Band.SearchBand(term);
+            }
+        }
+
+        #endregion
+
+        #region dates
+        //dates
         public ICommand SaveDateCommand
         {
             get { return new RelayCommand(saveDateHandler); }
@@ -323,8 +381,10 @@ namespace eindopdracht.viewmodel
                 MessageBox.Show("Datum " + Dates.StartDate.ToString("dd/MM/yyyy") + " - " + Dates.EndDate.ToString("dd/MM/yyyy") + " is succesvol opgeslagen");
             }
         }
+        #endregion
 
-
+        #region genres
+        //genres
         public ICommand AddGenreToBand
         {
             get { return new RelayCommand(AddGenreBandHandler); }
@@ -348,7 +408,20 @@ namespace eindopdracht.viewmodel
             BandsList = Band.GetBands();          
         }
 
+        public ICommand DeleteGenre
+        {
+            get { return new RelayCommand<Genre>(deleteGenreHandler); }
+        }
 
+        private void deleteGenreHandler(Genre genre)
+        {
+            Genre.DeleteGenre(genre);
+            ListGenres = Genre.GetGenres();
+        }
+        #endregion
+
+        #region fest name
+        //fest name
         public ICommand SaveFestivalName
         {
             get { return new RelayCommand(FestNameHandler); }
@@ -358,7 +431,9 @@ namespace eindopdracht.viewmodel
         {
             Festival.SaveFestName(FestName);
         }
+        #endregion
 
+        #region social media
         //social media
         public ICommand CheckFacebook
         {
@@ -379,53 +454,7 @@ namespace eindopdracht.viewmodel
         {
             System.Diagnostics.Process.Start("https://twitter.com/" + SelectedBand.Twitter);
         }
-
-
-        public ICommand DeletBandCommand
-        {
-            get { return new RelayCommand(DeleteBandHandler); }
-        }
-
-        private void DeleteBandHandler()
-        {
-            string sMessageBoxText = "Weet je zeker dat je " + SelectedBand.Name+ " wil verwijderen? Alle lineups worden met deze band worden ook verwijderd.";
-            string sCaption = "Bent u zeker?";
-
-            MessageBoxButton btnMessageBox = MessageBoxButton.YesNo;
-            MessageBoxImage icnMessageBox = MessageBoxImage.Question;
-
-            MessageBoxResult rsltMessageBox = MessageBox.Show(sMessageBoxText, sCaption, btnMessageBox, icnMessageBox);
-            if (rsltMessageBox == MessageBoxResult.Yes)
-            {
-                Band.DeletBand(SelectedBand);
-            }
-            BandsList = Band.GetBands();
-        }
-
-
-        public ICommand DeleteGenre
-        {
-            get { return new RelayCommand<Genre>(deleteGenreHandler); }
-        }
-
-        private void deleteGenreHandler(Genre genre)
-        {
-            Genre.DeleteGenre(genre);
-            ListGenres = Genre.GetGenres();
-        }
-
-
-        public ICommand DeleteStage
-        {
-            get { return new RelayCommand<Stage>(deleteStageHandler); }
-        }
-
-        private void deleteStageHandler(Stage stage)
-        {
-            Stage.DeleteStage(stage);
-            ListStages = Stage.GetStages();
-        }
-
+        #endregion
 
         #endregion
     }
