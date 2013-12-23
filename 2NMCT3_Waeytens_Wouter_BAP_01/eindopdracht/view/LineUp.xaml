@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF45"
              mc:Ignorable="d" 
              d:DesignHeight="706" d:DesignWidth="1024">
     <Grid>
@@ -11,7 +13,6 @@
             <ColumnDefinition Width="121*"/>
             <ColumnDefinition Width="34*"/>
             <ColumnDefinition Width="126*"/>
-
             <ColumnDefinition Width="195*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -110,7 +111,13 @@
                 <ColumnDefinition Width="175*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Margin="7" FontSize="18" Grid.ColumnSpan="2">Add Band:</TextBlock>
-            <TextBox Grid.Row="1" Margin="7" Grid.ColumnSpan="2"></TextBox>
+            <TextBox x:Name="SearchBand" Grid.Row="1" Margin="7" Grid.ColumnSpan="2" GotFocus="Focus" Text="zoek een band">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="TextChanged">
+                        <cmd:EventToCommand Command="{Binding ZoekCommand}" CommandParameter="{Binding Text,ElementName=SearchBand}"></cmd:EventToCommand>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
             <ScrollViewer Grid.Row="3" Grid.ColumnSpan="2" Margin="7">
                 <StackPanel>
                     <ItemsControl ItemsSource="{Binding LstBands}">

@@ -168,8 +168,6 @@ namespace eindopdracht.viewmodel
             get { return _lu; }
             set { _lu = value; }
         }
-        
-
         #endregion
 
         #region ctor
@@ -362,6 +360,22 @@ namespace eindopdracht.viewmodel
             ListLineUp = LineUp.getLineupsByStageAndDay(lu);
         }
 
+        public ICommand ZoekCommand
+        {
+            get { return new RelayCommand<string>(searchBandHandler); }
+        }
+
+        private void searchBandHandler(string term)
+        {
+            if (term == "")
+            {
+                LstBands = Band.GetBands();
+            }
+            else
+            {
+                LstBands = Band.SearchBand(term);
+            }
+        }
 
         #endregion
     }
