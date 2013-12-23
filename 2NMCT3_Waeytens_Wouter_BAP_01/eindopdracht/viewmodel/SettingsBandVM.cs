@@ -379,7 +379,53 @@ namespace eindopdracht.viewmodel
         {
             System.Diagnostics.Process.Start("https://twitter.com/" + SelectedBand.Twitter);
         }
-        
+
+
+        public ICommand DeletBandCommand
+        {
+            get { return new RelayCommand(DeleteBandHandler); }
+        }
+
+        private void DeleteBandHandler()
+        {
+            string sMessageBoxText = "Weet je zeker dat je " + SelectedBand.Name+ " wil verwijderen? Alle lineups worden met deze band worden ook verwijderd.";
+            string sCaption = "Bent u zeker?";
+
+            MessageBoxButton btnMessageBox = MessageBoxButton.YesNo;
+            MessageBoxImage icnMessageBox = MessageBoxImage.Question;
+
+            MessageBoxResult rsltMessageBox = MessageBox.Show(sMessageBoxText, sCaption, btnMessageBox, icnMessageBox);
+            if (rsltMessageBox == MessageBoxResult.Yes)
+            {
+                Band.DeletBand(SelectedBand);
+            }
+        }
+
+
+        public ICommand DeleteGenre
+        {
+            get { return new RelayCommand<Genre>(deleteGenreHandler); }
+        }
+
+        private void deleteGenreHandler(Genre genre)
+        {
+            Genre.DeleteGenre(genre);
+            ListGenres = Genre.GetGenres();
+        }
+
+
+        public ICommand DeleteStage
+        {
+            get { return new RelayCommand<Stage>(deleteStageHandler); }
+        }
+
+        private void deleteStageHandler(Stage stage)
+        {
+            Stage.DeleteStage(stage);
+            ListStages = Stage.GetStages();
+        }
+
+
         #endregion
     }
 }

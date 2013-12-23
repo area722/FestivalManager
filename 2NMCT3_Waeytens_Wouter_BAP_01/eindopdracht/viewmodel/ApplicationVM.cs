@@ -22,6 +22,8 @@ namespace eindopdracht.viewmodel
 
             //festname
             FestName = Festival.GetFestName();
+
+            BackgroundImage = AppDomain.CurrentDomain.BaseDirectory + "pattern.png";
         }
 
         private IPage _currentpage;
@@ -60,6 +62,16 @@ namespace eindopdracht.viewmodel
             get { return _festName; }
             set { _festName = value; OnPropertyChanged("FestName"); }
         }
+
+        //background pattern
+        private string _backgroundImage;
+
+        public string BackgroundImage
+        {
+            get { return _backgroundImage; }
+            set { _backgroundImage = value; OnPropertyChanged("BackgroundImage"); }
+        }
+        
         
     }
 }

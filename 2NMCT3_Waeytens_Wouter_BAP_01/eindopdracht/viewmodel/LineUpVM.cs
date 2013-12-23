@@ -160,6 +160,16 @@ namespace eindopdracht.viewmodel
             get { return _lstTimes; }
             set { _lstTimes = value; }
         }
+
+        private LineUp _lu;
+
+        public LineUp Lu
+        {
+            get { return _lu; }
+            set { _lu = value; }
+        }
+        
+
         #endregion
 
         #region ctor
@@ -174,6 +184,8 @@ namespace eindopdracht.viewmodel
             fillShowTimes();
             ListLineUp = new ObservableCollection<LineUp>();
             VisibleBand = "Hidden";
+
+            Lu = new LineUp();
         }
 
         #endregion
@@ -258,6 +270,7 @@ namespace eindopdracht.viewmodel
             {
                 LineUp lu = new LineUp()
                 {
+                    ID = Lu.ID,
                     Date = SelectedDay,
                     Stage = SelectedStage
                 };
@@ -276,6 +289,10 @@ namespace eindopdracht.viewmodel
         private void LineUpBandHandler(Band band)
         {
             Console.WriteLine(band.Name);
+            VisibleBand = "Hidden";
+            LineUp.addBandToLineUp(band,Lu);
+            Console.WriteLine(SelectedDay);
+            ListLineUp = LineUp.getLineupsByStageAndDay(Lu);
         }
 
         public ICommand AddLineUpCommand
@@ -319,6 +336,8 @@ namespace eindopdracht.viewmodel
         private void selectLineUpHandler(LineUp lu)
         {
             Console.WriteLine(lu.Stage.Name);
+            VisibleBand = "Visible";
+            Lu = lu;
         }
 
 

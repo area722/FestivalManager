@@ -57,5 +57,17 @@ namespace eindopdracht.model
             DbParameter par1 = DataBase.addparameter("@Id", stage.ID);
             DataBase.modifyData(sql, par,par1);
         }
+
+        public static void DeleteStage(Stage stage)
+        {
+            string sql = "DELETE FROM Stages WHERE ID=@stageID";
+            DbParameter par = DataBase.addparameter("@stageID",stage.ID);
+            DataBase.modifyData(sql,par);
+
+            //ook uit de lineup verwijderen
+            string sql1 = "DELETE FROM LineUp WHERE Stage=@stageID";
+            DbParameter par1 = DataBase.addparameter("@stageID", stage.ID);
+            DataBase.modifyData(sql1,par1);
+        }
     }
 }

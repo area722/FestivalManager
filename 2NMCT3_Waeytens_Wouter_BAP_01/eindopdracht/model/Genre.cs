@@ -58,5 +58,17 @@ namespace eindopdracht.model
             DbParameter par1 = DataBase.addparameter("@Id", genre.ID);
             DataBase.modifyData(sql, par, par1);
         }
+
+        public static void DeleteGenre(Genre genre)
+        {
+            string sql = "DELETE FROM Genres WHERE ID=@id";
+            DbParameter par = DataBase.addparameter("@id", genre.ID);
+            DataBase.modifyData(sql,par);
+
+            //alle band ook verwijderen
+            string sql1 = "DELETE FROM GenreBand WHERE IdGenre=@genreID";
+            DbParameter par1 = DataBase.addparameter("@genreID", genre.ID);
+            DataBase.modifyData(sql1,par1);
+        }
     }
 }

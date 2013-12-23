@@ -171,10 +171,25 @@ namespace eindopdracht.model
                     ID = (int)reader["StageID"],
                     Name = (string)reader["Name"]
                 };
+
                 lst.Add(lineup);
             }
-            lst.OrderBy(p=>p.Until);
-            return lst;
+
+            ObservableCollection<LineUp> lst1 = new ObservableCollection<LineUp>();
+            foreach (LineUp lu in lst)
+            {
+                string sql1 = "SELECT * FROM LineUpBand WHERE LineUpID = @luid";
+                DbParameter par = DataBase.addparameter("@luid", lu.ID);
+                DbDataReader reader1 = DataBase.GetData(sql1, par);
+                while (reader1.Read())
+                {
+                    Band bnd = new Band() { ID = (int)reader1["BandID"] };
+                    lu.Band = Band.GetBandByid(bnd);
+                }
+                lst1.Add(lu);
+            }
+
+            return lst1;
         }
 
         public static void removeLineUpsDates(Festival fest)
@@ -183,6 +198,34 @@ namespace eindopdracht.model
             DbParameter startDate = DataBase.addparameter("@startDate",fest.StartDate);
             DbParameter endDate = DataBase.addparameter("@endDate",fest.EndDate);
             DataBase.modifyData(sql,startDate,endDate);
+        }
+
+        public static void addBandToLineUp(Band band, LineUp lu)
+        {
+            //kijken of lineup al volzet is
+            string sql = "SELECT * FROM LineUpBand WHERE LineUpID = @lineupID";
+            DbParameter luid = DataBase.addparameter("@lineupID", lu.ID);
+            DbDataReader reader = DataBase.GetData(sql,luid);
+            ObservableCollection<int> lst = new ObservableCollection<int>();
+            while(reader.Read())
+            {
+                lst.Add((int)reader["lineUpID"]);
+            }
+
+            if (lst.Count == 0)
+            {
+                String sql1 = "INSERT INTO LineUpBand (BandID,LineUpID) VALUES (@bandID,@lineupID)";
+                DbParameter par1 = DataBase.addparameter("@bandID", band.ID);
+                DbParameter par2 = DataBase.addparameter("@lineupID", lu.ID);
+                DataBase.modifyData(sql1, par1, par2);
+            }
+            if(lst.Count > 0)
+            {
+                string sql2 = "UPDATE LineUpBand SET BandID=@bandID WHERE LineUpID = @lineupID";
+                DbParameter bandID = DataBase.addparameter("@bandID",band.ID);
+                DbParameter luID = DataBase.addparameter("@lineupID", lu.ID);
+                DataBase.modifyData(sql2,bandID,luID);
+            }
         }
     }
 }

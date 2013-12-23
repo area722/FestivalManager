@@ -203,5 +203,16 @@ namespace eindopdracht.model
             DbParameter idGenre = DataBase.addparameter("@genreID",genre.ID);
             DataBase.modifyData(sql,idBand,idGenre);
         }
+
+        public static void DeletBand(Band band)
+        {
+            string sql = "DELETE FROM Bands WHERE ID=@id";
+            DbParameter par1 = DataBase.addparameter("@id",band.ID);
+            DataBase.modifyData(sql,par1);
+
+
+            //code voor lineup te deleten!!
+            string sql1 = "DELETE FROM ";
+        }
     }
 }

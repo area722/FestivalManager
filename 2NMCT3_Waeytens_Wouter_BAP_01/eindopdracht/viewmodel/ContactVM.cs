@@ -218,7 +218,6 @@ namespace eindopdracht.viewmodel
             }
         }
 
-
         public ICommand DeleteContactCommand
         {
             get { return new RelayCommand<ContactPersoon>(deleteHandler); }
