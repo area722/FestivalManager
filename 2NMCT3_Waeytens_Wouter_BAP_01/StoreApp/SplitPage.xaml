@@ -9,6 +9,7 @@
     xmlns:common="using:StoreApp.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:band="using:StoreApp.DataModel"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -18,6 +19,7 @@
             x:Name="itemsViewSource"
             Source="{Binding Items}"
             d:Source="{Binding AllGroups[0].Items, Source={d:DesignInstance Type=data:SampleDataSource, IsDesignTimeCreatable=True}}"/>
+        <band:BandVM x:Key="bandInstance"></band:BandVM>
     </Page.Resources>
 
     <!--
@@ -62,10 +64,33 @@
             Grid.Row="1"
             Margin="-10,-10,0,0"
             Padding="120,0,0,60"
-            ItemsSource="{Binding Source={StaticResource itemsViewSource}}"
+            ItemsSource="{Binding Source={StaticResource bandInstance}, Path=LstBand}"
+            SelectedItem="{Binding Source={StaticResource bandInstance}, Path=SelectedBand}"
             IsSwipeEnabled="False"
-            SelectionChanged="ItemListView_SelectionChanged"
-            ItemTemplate="{StaticResource Standard130ItemTemplate}"/>
+            SelectionChanged="ItemListView_SelectionChanged">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Width="60" Height="60">
+                            <Image Source="{Binding Photo}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title}"/>
+                        </Border>
+                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                            <TextBlock Text="{Binding Name}" TextWrapping="NoWrap" MaxHeight="40"/>
+                            <TextBlock Text="{Binding Facebook}"  TextWrapping="NoWrap"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="FrameworkElement">
+                    <Setter Property="Margin" Value="0,0,0,10"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
 
         <!-- Details for selected item -->
         <ScrollViewer
@@ -89,12 +114,12 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Image Grid.Row="1" Margin="0,0,20,0" Width="180" Height="180" Source="{Binding Image}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title}"/>
+                <Image Grid.Row="1" Margin="0,0,20,0" Width="180" Height="180" Source="{Binding Photo}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title}"/>
                 <StackPanel x:Name="itemDetailTitlePanel" Grid.Row="1" Grid.Column="1">
-                    <TextBlock x:Name="itemTitle" Margin="0,-10,0,0" Text="{Binding Title}" Style="{StaticResource SubheaderTextStyle}"/>
-                    <TextBlock x:Name="itemSubtitle" Margin="0,0,0,20" Text="{Binding Subtitle}" Style="{StaticResource SubtitleTextStyle}"/>
+                    <TextBlock x:Name="itemTitle" Margin="0,-10,0,0" Text="{Binding Name}" Style="{StaticResource SubheaderTextStyle}"/>
+                    <TextBlock x:Name="itemSubtitle" Margin="0,0,0,20" Text="{Binding Facebook}" Style="{StaticResource SubtitleTextStyle}"/>
                 </StackPanel>
-                <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Margin="0,20,0,0" Text="{Binding Content}" Style="{StaticResource BodyTextStyle}"/>
+                <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Margin="0,20,0,0" Text="{Binding Description}" Style="{StaticResource BodyTextStyle}"/>
             </Grid>
         </ScrollViewer>
 

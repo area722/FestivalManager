@@ -101,11 +101,17 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <ProjectReference Include="..\PortableLibrary\PortableLibrary.csproj">
+      <Project>{18d002e7-a773-4d48-9185-6deb62a67101}</Project>
+      <Name>PortableLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\BandVM.cs" />
+    <Compile Include="DataModel\GenreVM.cs" />
     <Compile Include="ItemsPage.xaml.cs">
       <DependentUpon>ItemsPage.xaml</DependentUpon>
     </Compile>
