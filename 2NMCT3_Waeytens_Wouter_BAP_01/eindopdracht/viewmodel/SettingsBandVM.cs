@@ -399,6 +399,7 @@ namespace eindopdracht.viewmodel
             {
                 Band.DeletBand(SelectedBand);
             }
+            BandsList = Band.GetBands();
         }
 
 

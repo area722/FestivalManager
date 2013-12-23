@@ -227,5 +227,16 @@ namespace eindopdracht.model
                 DataBase.modifyData(sql2,bandID,luID);
             }
         }
+
+        public static void DeleteLineUp(LineUp lu)
+        { 
+            String sql = "DELETE FROM LineUp WHERE ID=@luid";
+            DbParameter par1 = DataBase.addparameter("@luid",lu.ID);
+            DataBase.modifyData(sql,par1);
+
+            string sql1 = "DELETE FROM LineUpBand WHERE LineUpID=@luid";
+            DbParameter par2 = DataBase.addparameter("@luid",lu.ID);
+            DataBase.modifyData(sql1,par2);
+        }
     }
 }

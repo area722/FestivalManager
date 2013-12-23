@@ -82,7 +82,7 @@ namespace eindopdracht.model
         public static ObservableCollection<ContactPersoon> GetContacts()
         {
             ObservableCollection<ContactPersoon> lst = new ObservableCollection<ContactPersoon>();
-            string sql = "SELECT * FROM ContactPersons LEFT JOIN ContactTypes ON ContactPersons.JobRole=ContactTypes.ID";
+            string sql = "SELECT * FROM ContactPersons LEFT JOIN ContactTypes ON ContactPersons.JobRole=ContactTypes.ID ORDER BY ContactPersons.Name ASC";
             DbDataReader reader = DataBase.GetData(sql);
             while (reader.Read())
             {

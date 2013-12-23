@@ -212,7 +212,9 @@ namespace eindopdracht.model
 
 
             //code voor lineup te deleten!!
-            string sql1 = "DELETE FROM ";
+            string sql1 = "DELETE FROM LineUpBand WHERE BandID = @bandID";
+            DbParameter par2 = DataBase.addparameter("@bandID",band.ID);
+            DataBase.modifyData(sql1,par2);
         }
     }
 }

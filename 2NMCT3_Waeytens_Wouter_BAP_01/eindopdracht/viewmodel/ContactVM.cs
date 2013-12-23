@@ -51,9 +51,9 @@ namespace eindopdracht.viewmodel
             set { _addContactPerson = value; OnPropertyChanged("AddContactPerson"); }
         }
 
-        private String _addCategorie;
+        private ContactPersoonType _addCategorie;
 
-        public String AddCategorie
+        public ContactPersoonType AddCategorie
         {
             get { return _addCategorie; }
             set { _addCategorie = value; OnPropertyChanged("AddCategorie"); }
@@ -82,6 +82,14 @@ namespace eindopdracht.viewmodel
             get { return _selectedIndexType; }
             set { _selectedIndexType = value; OnPropertyChanged("SelectedIndexType"); }
         }
+
+        private String _addTypeText;
+
+        public String addTypeText
+        {
+            get { return _addTypeText; }
+            set { _addTypeText = value; OnPropertyChanged("addTypeText"); }
+        }
         
         #endregion
 
@@ -93,6 +101,10 @@ namespace eindopdracht.viewmodel
             AddContactPerson = new ContactPersoon();
             ButtonText = "Add";
             VisibleButton = "Hidden";
+
+            //types
+            addTypeText = "Add";
+            AddCategorie = new ContactPersoonType();
         }
         #endregion
 
@@ -114,6 +126,7 @@ namespace eindopdracht.viewmodel
                 //Console.WriteLine("editcontact");
                 ContactPersoon.editContact(AddContactPerson);
             }
+            VisibleButton = "Visible";
             ContactPersoonLst = ContactPersoon.GetContacts();
         }
 
@@ -124,8 +137,18 @@ namespace eindopdracht.viewmodel
 
         private void AddCat()
         {
-            ContactPersoonType.AddCategorie(AddCategorie);
+            if (addTypeText == "Add")
+            {
+                ContactPersoonType.AddCategorie(AddCategorie.Name);
+            }
+            if (addTypeText == "Edit")
+            {
+                ContactPersoonType.EditType(AddCategorie);
+            }
             TypesList = ContactPersoonType.GetTypes();
+            addTypeText = "Add";
+            AddCategorie = new ContactPersoonType();
+
         }
 
         public ICommand EditContactCommand
@@ -238,6 +261,39 @@ namespace eindopdracht.viewmodel
                 ContactPersoon.DeleteContactPerson(person);
                 ContactPersoonLst = ContactPersoon.GetContacts();
             }
+        }
+
+        public ICommand DeleteCat
+        {
+            get { return new RelayCommand<ContactPersoonType>(deleteCatHandler); }
+        }
+
+        private void deleteCatHandler(ContactPersoonType type)
+        {
+            string sMessageBoxText = "Weet je zeker dat je " + type.Name + " wil verwijderen? Alle contactpersonen met dit type worden ook verwijderd.";
+            string sCaption = "Bent u zeker?";
+
+            MessageBoxButton btnMessageBox = MessageBoxButton.YesNo;
+            MessageBoxImage icnMessageBox = MessageBoxImage.Question;
+
+            MessageBoxResult rsltMessageBox = MessageBox.Show(sMessageBoxText, sCaption, btnMessageBox, icnMessageBox);
+            if(rsltMessageBox == MessageBoxResult.Yes)
+            {
+                ContactPersoonType.deleteType(type);
+                TypesList = ContactPersoonType.GetTypes();
+                ContactPersoonLst = ContactPersoon.GetContacts();
+            }
+        }
+
+        public ICommand SelectType
+        {
+            get { return new RelayCommand<ContactPersoonType>(SelectTypeHandler); }
+        }
+
+        private void SelectTypeHandler(ContactPersoonType type)
+        {
+            AddCategorie = type;
+            addTypeText = "Edit";
         }
 
         #region filters

@@ -340,7 +340,6 @@ namespace eindopdracht.viewmodel
             Lu = lu;
         }
 
-
         public ICommand RefreshStagesAndDays
         {
             get { return new RelayCommand(refreshHandler); }
@@ -350,6 +349,17 @@ namespace eindopdracht.viewmodel
         {
             ListDays = getListDays();
             LstPodiums = Stage.GetStages();
+        }
+
+        public ICommand DeleteLineUp
+        {
+            get { return new RelayCommand<LineUp>(deleteLinupHandler); }
+        }
+
+        private void deleteLinupHandler(LineUp lu)
+        {
+            LineUp.DeleteLineUp(lu);
+            ListLineUp = LineUp.getLineupsByStageAndDay(lu);
         }
 
 

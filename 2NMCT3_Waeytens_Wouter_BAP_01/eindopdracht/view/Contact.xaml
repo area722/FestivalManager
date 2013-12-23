@@ -89,11 +89,11 @@
             </ScrollViewer>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="629*"></RowDefinition>
-                    <RowDefinition Height="11*"></RowDefinition>
+                    <RowDefinition Height="289*"></RowDefinition>
+                    <RowDefinition Height="379*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <!--add/edit-->
-                <Grid Grid.Row="0" Margin="10,23,10,301" Background="Aqua">
+                <Grid Grid.Row="0" Margin="10" Background="Aqua">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="107*"/>
                         <ColumnDefinition Width="286*"/>
@@ -118,12 +118,10 @@
                     <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="0" Margin="61,6,0,0" Height="16" Width="36" Grid.Row="1"><Run Language="nl-be" Text="Naam:"/></TextBlock>
                     <TextBlock HorizontalAlignment="Left" Margin="77,10,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="20"><Run Language="nl-be" Text="Tel: "/></TextBlock>
                     <TextBlock HorizontalAlignment="Left" Margin="44,10,0,0" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Width="62" RenderTransformOrigin="0.516,1.625"><Run Language="nl-be" Text="Categorie:"/></TextBlock>
-                    <Button Content="{Binding ButtonText}" Style="{StaticResource addButton}" Grid.Row="8" Margin="6,7,10,7" Grid.ColumnSpan="3" Command="{Binding SaveContactCommand}" />
+                    <Button Content="{Binding ButtonText}" Style="{StaticResource addButton}" Grid.Row="7" Margin="6,11,10,7" Grid.ColumnSpan="3" Command="{Binding SaveContactCommand}" Grid.RowSpan="2" />
                     <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="8,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="1" Text="{Binding AddContactPerson.Name}"/>
                     <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="8,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="2" Text="{Binding AddContactPerson.Phone}" />
                     <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="6,10,0,0" Grid.Row="6" VerticalAlignment="Top" Width="269" Height="22" ItemsSource="{Binding TypesList}" SelectedItem="{Binding AddContactPerson.JobRole}" SelectedIndex="{Binding SelectedIndexType}" DisplayMemberPath="Name"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="6,8,0,0" Grid.Row="7" TextWrapping="Wrap" VerticalAlignment="Top" Width="194" Text="{Binding AddCategorie}"/>
-                    <Button Content="add" Style="{StaticResource addButton}" Grid.Row="7" Margin="205,7,5,0" Grid.Column="1" Height="24" VerticalAlignment="Top" Command="{Binding AddCatCommand}"/>
                     <TextBlock HorizontalAlignment="Left" Margin="57,14,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="42"><Run Language="nl-be" Text="Bedrijf:"/></TextBlock>
                     <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="8,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="3" Text="{Binding AddContactPerson.Company}" />
                     <TextBlock HorizontalAlignment="Left" Margin="62,10,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="42"><Run Language="nl-be" Text="Email:"/></TextBlock>
@@ -131,6 +129,29 @@
                     <TextBlock HorizontalAlignment="Left" Margin="68,9,0,0" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="31"><Run Language="nl-be" Text="Stad:"/></TextBlock>
                     <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="8,9,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="4" Text="{Binding AddContactPerson.City}" />
                     <Button Content="New" Grid.Column="2" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Command="{Binding newContactCommand}" Visibility="{Binding VisibleButton}"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="333*"/>
+                        <RowDefinition Height="46*"/>
+                    </Grid.RowDefinitions>
+                    <ScrollViewer Margin="7">
+                        <StackPanel>
+                            <ItemsControl ItemsSource="{Binding TypesList}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Background="Beige" Margin="7">
+                                            <TextBlock Text="{Binding Name}" Margin="3"></TextBlock>
+                                            <Button Opacity="0" Command="{Binding DataContext.SelectType, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"></Button>
+                                            <Button Content="X" VerticalAlignment="Top" HorizontalAlignment="Right" Command="{Binding DataContext.DeleteCat, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}"></Button>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </ScrollViewer>
+                    <TextBox HorizontalAlignment="Left" Height="23" Margin="7,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="356" Text="{Binding AddCategorie.Name}" Grid.Row="1"/>
+                    <Button Content="{Binding addTypeText}" Style="{StaticResource addButton}" Margin="368,7,7,0" Height="24" VerticalAlignment="Top" Command="{Binding AddCatCommand}" Grid.Row="1"/>
                 </Grid>
             </Grid>
         </Grid>
