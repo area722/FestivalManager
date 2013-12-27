@@ -1,5 +1,4 @@
-﻿using PortableLibrary;
-using REST_service.Models.DAL;
+﻿using REST_service.Models.DAL;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,11 +8,11 @@ using System.Web.Http;
 
 namespace REST_service.Controllers
 {
-    public class GenreController : ApiController
+    public class FestController : ApiController
     {
-        public ObservableCollection<Genre> Get()
+        public String Get()
         {
-            return GenreRepo.GetGenres();
+            return FestRepo.GetFestName();
         }
     }
 }

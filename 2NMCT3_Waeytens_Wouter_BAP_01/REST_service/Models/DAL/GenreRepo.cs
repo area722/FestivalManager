@@ -1,6 +1,6 @@
 ﻿using PortableLibrary;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Common;
 using System.Linq;
 using System.Web;
@@ -10,10 +10,10 @@ namespace REST_service.Models.DAL
 {
     public class GenreRepo
     {
-        public static List<Genre> GetGenres()
+        public static ObservableCollection<Genre> GetGenres()
         {
-            string sql = "SELECT * FROM Genres ORDER BY ID";
-            List<Genre> lst = new List<Genre>();
+            string sql = "SELECT * FROM Genres ORDER BY Name";
+            ObservableCollection<Genre> lst = new ObservableCollection<Genre>();
             DbDataReader reader = Database.GetData(sql);
             while (reader.Read())
             {

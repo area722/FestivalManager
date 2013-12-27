@@ -1,6 +1,5 @@
 ﻿
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
@@ -81,12 +80,12 @@ namespace PortableLibrary
             set { _facebook = value; }
         }
 
-        //private ObservableCollection<Genre> _genres;
+        private ObservableCollection<Genre> _genres;
 
-        //public ObservableCollection<Genre> Genres
-        //{
-        //    get { return _genres; }
-        //    set { _genres = value; }
-        //}
+        public ObservableCollection<Genre> Genres
+        {
+            get { return _genres; }
+            set { _genres = value; }
+        }
     }
 }
